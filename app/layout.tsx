@@ -25,8 +25,8 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body className={`${inter.className} min-h-screen flex flex-col`}>
-        <div className="pt-16 md:pt-20 flex-grow">
-          <Navbar />
+        <div className=" flex-grow">
+        <Navbar />
           {children}
           <Footer />
         </div>
