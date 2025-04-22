@@ -1,3 +1,4 @@
+'use client'
 import * as React from "react";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
@@ -124,7 +125,7 @@ const ProductCard = React.forwardRef<HTMLDivElement, ProductCardProps>(
         {/* Image section */}
         <div className="relative aspect-square overflow-hidden">
           <Image
-            src={imageUrl}
+            src={imageUrl? imageUrl : "/images/Image.png"}
             alt={imageAlt || `${name} image`}
             fill
             className="object-cover transition-all group-hover:scale-105"
