@@ -120,3 +120,16 @@
     @apply bg-background text-foreground;
   }
 }
+
+.discount-tag-bg {
+  background-color: #EA4B48;
+  color: #ffffff;
+}
+.add-to-cart-bg {
+  background-color: #00B207;
+  color: #ffffff;
+}
+
+.isInCart-name-color{
+  color: #2C742F;
+}
