@@ -17,8 +17,6 @@ import { ProductCardProps } from "@/types/custom-card";
  * @param {number} props.price - The price of the product in USD.
  * @param {number} props.rating - The rating of the product (0 to 5).
  * @param {number} [props.discount] - The discount percentage applied to the product (optional).
- * @param {boolean} [props.isInCart=false] - Indicates whether the product is already in the cart.
- * @param {() => void} [props.onAddToCart] - Callback function triggered when the "Add to Cart" button is clicked.
  * @param {string} [props.imageAlt=""] - Alternative text for the product image.
  * @param {boolean} [props.imagePriority=false] - Determines if the product image should be prioritized for loading.
  * @param {React.Ref<HTMLDivElement>} ref - A React ref to access the card's root DOM element.
@@ -34,8 +32,6 @@ import { ProductCardProps } from "@/types/custom-card";
  *   price={29.99}
  *   rating={4.5}
  *   discount={10}
- *   isInCart={false}
- *   onAddToCart={() => console.log('Added to cart')}
  *   imageAlt="Sample Product Image"
  *   imagePriority={true}
  * />
