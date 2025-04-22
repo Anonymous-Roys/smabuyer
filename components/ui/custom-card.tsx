@@ -3,7 +3,6 @@ import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { ProductCardProps } from "@/types/custom-card";
 
-
 /**
  * `ProductCard` is a reusable React component that displays a product card with details such as
  * an image, name, price, discount, rating, and an "Add to Cart" button. It supports customization
@@ -106,7 +105,7 @@ const ProductCard = React.forwardRef<HTMLDivElement, ProductCardProps>(
             )}
           >
             <Image
-              src="/assets/icons/heart.png"
+              src="/icons/heart.png"
               alt="heart icon"
               width={20}
               height={20}
@@ -118,12 +117,7 @@ const ProductCard = React.forwardRef<HTMLDivElement, ProductCardProps>(
               "flex h-10 w-10 items-center cursor-pointer justify-center rounded-full transition-colors bg-white text-gray-700 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
             )}
           >
-            <Image
-              src="/assets/icons/eye.png"
-              alt="eye icon"
-              width={20}
-              height={20}
-            />
+            <Image src="/icons/eye.png" alt="eye icon" width={20} height={20} />
           </button>
         </div>
 
@@ -186,11 +180,7 @@ const ProductCard = React.forwardRef<HTMLDivElement, ProductCardProps>(
               )}
             >
               <Image
-                src={
-                  !isInCart
-                    ? "/assets/icons/bag.png"
-                    : "/assets/icons/bag-white.png"
-                }
+                src={!isInCart ? "/icons/bag.png" : "/icons/bag-white.png"}
                 alt="bag icon"
                 width={20}
                 height={20}
