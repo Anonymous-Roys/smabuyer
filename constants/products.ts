@@ -1,15 +1,15 @@
 import { ProductCardProps } from "@/types/custom-card";
 
-export const PRODUCTS: ProductCardProps[] = [
+const PRODUCTS: ProductCardProps[] = [
     {
-        name: 'Chinese cabbage',
+        name: 'Chinese Cabbage',
         price: 12,
         rating: 4.5,
         imageAlt: 'Product 1 Image',
     },
     {
         imageUrl: '/images/product2.jpg',
-        name: 'Product 2',
+        name: 'Green Lettuce',
         price: 9,
         rating: 4.0,
         imageAlt: 'Product 2 Image',
@@ -67,17 +67,19 @@ export const PRODUCTS: ProductCardProps[] = [
     },
     {
         imageUrl: '/images/product10.jpg',
-        name: 'Big Potatoes',
+        name: 'corn',
         price: 12,
         rating: 4.4,
         imageAlt: 'Product 10 Image',
     },
     {
         imageUrl: '/images/product11.jpg',
-        name: 'corn',
+        name: 'Big Potatoes',
         price: 12,
         rating: 4.0,
         discount: 10,
         imageAlt: 'Product 11 Image',
     },
 ];
+
+export default PRODUCTS;
