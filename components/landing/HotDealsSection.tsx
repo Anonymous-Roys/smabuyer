@@ -2,7 +2,7 @@ import React from "react";
 import ProductCard from "../ui/custom-card";
 import { PRODUCTS } from "@/constants/products";
 
-HOTDEAL = {
+const HOTDEAL = {
   imageUrl: "/images/product5.jpg",
   name: "Green Capsicum",
   price: 20.99,
