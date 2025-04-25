@@ -7,6 +7,7 @@ export const meta: Metadata = {
   description: "Customers",
 };
 import HotDealsSection from "@/components/landing/HotDealsSection";
+import FeaturedDeals from "@/components/landing/FeaturedDeals";
 
 const HomePage = () => {
   return (
@@ -14,6 +15,7 @@ const HomePage = () => {
       <Hero />
       <BaseIcon />
       <HotDealsSection />
+      <FeaturedDeals />
     </main>
   );
 };
