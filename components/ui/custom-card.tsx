@@ -1,8 +1,8 @@
-'use client'
+"use client";
 import * as React from "react";
 import { cn } from "@/lib/utils";
-import Image from "next/image";
 import { ProductCardProps } from "@/types/custom-card";
+import ImageBlur from "../common/ImageBlur";
 
 /**
  * `ProductCard` is a reusable React component that displays a product card with details such as
@@ -55,7 +55,6 @@ const ProductCard = React.forwardRef<HTMLDivElement, ProductCardProps>(
       rating,
       discount,
       imageAlt = "",
-      imagePriority = false,
       ...props
     },
     ref
@@ -105,7 +104,7 @@ const ProductCard = React.forwardRef<HTMLDivElement, ProductCardProps>(
               "flex h-10 w-10 items-center cursor-pointer justify-center rounded-full transition-colors bg-white text-gray-700 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
             )}
           >
-            <Image
+            <ImageBlur
               src="/icons/heart.png"
               alt="heart icon"
               width={20}
@@ -118,19 +117,24 @@ const ProductCard = React.forwardRef<HTMLDivElement, ProductCardProps>(
               "flex h-10 w-10 items-center cursor-pointer justify-center rounded-full transition-colors bg-white text-gray-700 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
             )}
           >
-            <Image src="/icons/eye.png" alt="eye icon" width={20} height={20} />
+            <ImageBlur
+              src="/icons/eye.png"
+              alt="eye icon"
+              width={20}
+              height={20}
+            />
           </button>
         </div>
 
         {/* Image section */}
         <div className="relative aspect-square overflow-hidden">
-          <Image
-            src={imageUrl? imageUrl : "/images/Image.png"}
+          <ImageBlur
+            src={imageUrl ? imageUrl : "/images/Image.png"}
             alt={imageAlt || `${name} image`}
-            fill
-            className="object-cover transition-all group-hover:scale-105"
+            width={300}
+            height={350}
+            className="object-cover transition-all group-hover:scale-105 w-full h-full"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            priority={imagePriority}
           />
         </div>
 
@@ -180,7 +184,7 @@ const ProductCard = React.forwardRef<HTMLDivElement, ProductCardProps>(
                   : "bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
               )}
             >
-              <Image
+              <ImageBlur
                 src={!isInCart ? "/icons/bag.png" : "/icons/bag-white.png"}
                 alt="bag icon"
                 width={20}
