@@ -2,16 +2,9 @@ import React from "react";
 import ProductCard from "../ui/custom-card";
 import PRODUCTS from "@/constants/products";
 import ImageBlur from "../common/ImageBlur";
+import SummerSaleCard from "../ui/summer-sale-card";
+import { HOTDEAL } from "@/constants/products";
 
-const HOTDEAL = {
-  imageUrl: "/images/product5.jpg",
-  name: "Green Capsicum",
-  price: 20.99,
-  rating: 4.7,
-  discount: 50,
-  imageAlt: "Product 5 Image",
-  isHotDeal: true,
-};
 
 const HotDealsSection: React.FC = () => {
   return (
@@ -70,6 +63,9 @@ const HotDealsSection: React.FC = () => {
             />
           ))}
         </div>
+      </div>
+      <div className="flex w-full mt-10">
+        <SummerSaleCard />
       </div>
     </section>
   );
