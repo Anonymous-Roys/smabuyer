@@ -211,7 +211,7 @@ const ProductCard = React.forwardRef<HTMLDivElement, ProductCardProps>(
             <button
               aria-label={`add ${name} to favourites`}
               className={cn(
-                "flex h-10 w-10 items-center cursor-pointer justify-center rounded-full transition-colors bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
+                "flex h-10 w-10 items-center cursor-pointer justify-center rounded-full transition-colors bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 group-hover:opacity-100 opacity-0"
               )}
             >
               <ImageBlur
@@ -242,7 +242,7 @@ const ProductCard = React.forwardRef<HTMLDivElement, ProductCardProps>(
             <button
               aria-label={`View ${name}`}
               className={cn(
-                "flex h-10 w-10 items-center cursor-pointer justify-center rounded-full transition-colors bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
+                "flex h-10 w-10 items-center cursor-pointer justify-center rounded-full transition-colors bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 group-hover:opacity-100 opacity-0"
               )}
             >
               <ImageBlur
@@ -325,7 +325,7 @@ const ProductCard = React.forwardRef<HTMLDivElement, ProductCardProps>(
               </button>
             )}
             {isHotDeal && !hotDealExpired ? (
-              <div>
+              <div className="pb-4">
                 <p className="text-center mt-4 text-gray-500 dark:text-gray-400">
                   Hurry up! Offer ends In:
                 </p>
