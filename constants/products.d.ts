@@ -1,0 +1,83 @@
+import { ProductCardProps } from "@/types/custom-card";
+
+export const PRODUCTS: ProductCardProps[] = [
+    {
+        name: 'Chinese cabbage',
+        price: 12,
+        rating: 4.5,
+        imageAlt: 'Product 1 Image',
+    },
+    {
+        imageUrl: '/images/product2.jpg',
+        name: 'Product 2',
+        price: 9,
+        rating: 4.0,
+        imageAlt: 'Product 2 Image',
+    },
+    {
+        imageUrl: '/images/product3.jpg',
+        name: 'Eggplant',
+        price: 34,
+        rating: 4.8,
+        imageAlt: 'Product 3 Image',
+    },
+    {
+        imageUrl: '/images/product4.jpg',
+        name: 'Fresh Cauliflower',
+        price: 12,
+        rating: 4.2,
+        imageAlt: 'Product 4 Image',
+    },
+    {
+        imageUrl: '/images/product5.jpg',
+        name: 'Green Capsicum',
+        price: 20.99,
+        rating: 4.7,
+        discount: 50,
+        imageAlt: 'Product 5 Image',
+    },
+    {
+        imageUrl: '/images/product6.jpg',
+        name: 'Green Chili',
+        price: 34,
+        rating: 2,
+        imageAlt: 'Product 6 Image',
+    },
+    {
+        imageUrl: '/images/product7.jpg',
+        name: 'Red Chili',
+        price: 12,
+        rating: 4.6,
+        imageAlt: 'Product 7 Image',
+    },
+    {
+        imageUrl: '/images/product8.jpg',
+        name: 'Red Tomatos',
+        price: 20,
+        rating: 4.9,
+        discount: 50,
+        imageAlt: 'Product 8 Image',
+    },
+    {
+        imageUrl: '/images/product9.jpg',
+        name: 'Surjapur Mango',
+        price: 34,
+        rating: 4.1,
+        imageAlt: 'Product 9 Image',
+    },
+    {
+        imageUrl: '/images/product10.jpg',
+        name: 'Big Potatoes',
+        price: 12,
+        rating: 4.4,
+        imageAlt: 'Product 10 Image',
+    },
+    {
+        imageUrl: '/images/product11.jpg',
+        name: 'corn',
+        price: 12,
+        rating: 4.0,
+        discount: 10,
+        imageAlt: 'Product 11 Image',
+    },
+];
