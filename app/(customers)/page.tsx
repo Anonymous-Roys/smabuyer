@@ -13,7 +13,7 @@ const HomePage = () => {
     <main className=" mx-auto">
       <Hero />
       <BaseIcon />
-      <div  className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {Array.from([1, 2, 3, 4]).map((item, idx) => (
           <ProductCard
             key={idx}
@@ -23,7 +23,7 @@ const HomePage = () => {
             rating={4.5}
             discount={10}
             imageAlt="Sample Product Image"
-          
+            isHotDeal={item === 1}
           />
         ))}
       </div>
