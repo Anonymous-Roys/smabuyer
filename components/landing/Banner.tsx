@@ -37,7 +37,7 @@ export default function Banner() {
               <h1 className="text-3xl lg:text-4xl font-bold text-white">
                 Grown by Farmers
               </h1>
-              <p className="text-white/90 text-sm lg:text-base px-2 border-l-4 border-[#84D187] mb-4">
+              <p className="text-white/90 max-md:max-w-xs tracking-normal text-sm lg:text-base px-2 border-l-4 border-[#84D187] mb-4">
                 We pride on locally sourced, farm-to-table growing practices and sustainable farming methods to provide the freshest food.
               </p>
               <Button className="bg-white text-[#00B207] hover:bg-emerald-50 group flex items-center gap-2 rounded-3xl p-4 mt-5">
