@@ -74,7 +74,10 @@ const ProductCard = React.forwardRef<HTMLDivElement, ProductCardProps>(
       []
     );
 
-    const effectiveEndDate = React.useMemo(() => endDate || defaultEndDate, [endDate, defaultEndDate]);
+    const effectiveEndDate = React.useMemo(
+      () => endDate || defaultEndDate,
+      [endDate, defaultEndDate]
+    );
 
     const handleAddToCart = () => {
       setIsInCart((prev) => !prev);
@@ -98,28 +101,28 @@ const ProductCard = React.forwardRef<HTMLDivElement, ProductCardProps>(
 
       // Debugging logs
       const updateCountdown = () => {
-      const now = new Date();
-      const difference = effectiveEndDate.getTime() - now.getTime();
+        const now = new Date();
+        const difference = effectiveEndDate.getTime() - now.getTime();
 
-      if (difference <= 0) {
-        console.log("Countdown expired!");
-        setHotDealExpired(true);
-        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
-        return;
-      }
+        if (difference <= 0) {
+          console.log("Countdown expired!");
+          setHotDealExpired(true);
+          setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+          return;
+        }
 
-      // Calculate time units
-      const seconds = Math.floor(difference / 1000);
-      const minutes = Math.floor(seconds / 60);
-      const hours = Math.floor(minutes / 60);
-      const days = Math.floor(hours / 24);
+        // Calculate time units
+        const seconds = Math.floor(difference / 1000);
+        const minutes = Math.floor(seconds / 60);
+        const hours = Math.floor(minutes / 60);
+        const days = Math.floor(hours / 24);
 
-      setTimeLeft({
-        days,
-        hours: hours % 24,
-        minutes: minutes % 60,
-        seconds: seconds % 60,
-      });
+        setTimeLeft({
+          days,
+          hours: hours % 24,
+          minutes: minutes % 60,
+          seconds: seconds % 60,
+        });
       };
 
       // Initial call
@@ -131,8 +134,8 @@ const ProductCard = React.forwardRef<HTMLDivElement, ProductCardProps>(
 
       // Cleanup
       return () => {
-      console.log("Clearing interval with ID:", intervalId);
-      clearInterval(intervalId);
+        console.log("Clearing interval with ID:", intervalId);
+        clearInterval(intervalId);
       };
     }, [effectiveEndDate, isHotDeal]);
 
