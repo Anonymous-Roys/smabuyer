@@ -28,8 +28,6 @@ const ProductsPage = () => {
     },
   ];
 
-  const products = Array.from({ length: 9 }, (_, i) => `Product ${i + 1}`);
-
   const tabs = [
     "All",
     "Vegetables",
