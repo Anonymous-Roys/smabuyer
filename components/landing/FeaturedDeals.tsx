@@ -2,6 +2,7 @@ import React from "react";
 import ProductCard from "../ui/custom-card";
 import PRODUCTS from "@/constants/products";
 import ImageBlur from "../common/ImageBlur";
+import Link from "next/link";
 
 const FeaturedDeals: React.FC = () => {
   return (
@@ -9,15 +10,19 @@ const FeaturedDeals: React.FC = () => {
       <h2 className="section-title flex justify-between items-center">
         <span className="block text-2xl font-bold">Featured Products</span>
         <span className="flex text-[#00B207] gap-3 items-center">
-          <span>View ALL </span>
-          <span>
-            <ImageBlur
-              src="/icons/more.png"
-              alt="more icon"
-              width={20}
-              height={20}
-            />
-          </span>
+          <Link href="/products" passHref>
+            <span className="flex items-center gap-3">
+              <span>View ALL </span>
+              <span>
+                <ImageBlur
+                  src="/icons/more.png"
+                  alt="more icon"
+                  width={20}
+                  height={20}
+                />
+              </span>
+            </span>
+          </Link>
         </span>
       </h2>
       <div className="flex flex-col">
