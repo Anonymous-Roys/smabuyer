@@ -77,15 +77,21 @@ const ProductsPage = () => {
           </header>
           <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {PRODUCTS.map((product, index) => (
-              <ProductCard
-                key={index}
-                imageUrl={product.imageUrl}
-                name={product.name}
-                price={product.price}
-                rating={product.rating}
-                discount={product.discount}
-                imageAlt={product.imageAlt}
-              />
+               <ProductCard
+               key={index}
+               imageUrl={product.imageUrl}
+               name={product.name}
+               price={product.price}
+               rating={product.rating}
+               discount={product.discount}
+               imageAlt={product.imageAlt}
+               farmer={product.farmer}
+               category={product.category}
+               tags={product.tags}
+               description={product.description}
+               additionalInfo={product.additionalInfo}
+               bulkPrice={product.bulkPrice}
+             />
             ))}
           </div>
         </div>

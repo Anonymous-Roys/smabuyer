@@ -321,11 +321,11 @@ const ProductCard = React.forwardRef<HTMLDivElement, ProductCardProps>(
             </button>
 
             {showOverlay && (
-              <div className="fixed inset-0 flex pt-20 items-center justify-center bg-black/40 bg-opacity-50 z-[100000]">
-                <div className="bg-white dark:bg-gray-900 rounded-lg shadow-lg p-6 w-11/12 max-w-4xl relative">
-                  {/* Close button - the only way to close the overlay */}
+              <div className="fixed inset-0 flex items-center justify-center bg-black/40 z-[100000] p-20  sm:pt-30">
+                <div className="bg-white dark:bg-gray-900 rounded-lg shadow-lg w-full max-w-4xl  pt-10 sm:pt-0 max-h-[90vh] overflow-y-auto">
+                  {/* Close button */}
                   <button
-                    className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 text-2xl hover:bg-gray-200 rounded-full p-1 transition-all"
+                    className="sticky top-2 right-2 ml-auto text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 text-2xl hover:bg-gray-200 rounded-full p-1 transition-all z-10"
                     onClick={() => {
                       setShowOverlay(false);
                       localStorage.removeItem("overlayVisible");
@@ -334,9 +334,9 @@ const ProductCard = React.forwardRef<HTMLDivElement, ProductCardProps>(
                     ✕
                   </button>
 
-                  <div className="flex gap-6">
-                    {/* Left Section: Small Images */}
-                    <div className="flex flex-col gap-2">
+                  <div className="flex flex-col lg:flex-row gap-6 p-4">
+                    {/* Left Section: Small Images - Horizontal on mobile */}
+                    <div className="flex lg:flex-col gap-2 order-2 lg:order-1 overflow-x-auto lg:overflow-x-visible pb-2 lg:pb-0">
                       {[imageUrl, imageUrl, imageUrl].map((url, index) => (
                         <ImageBlur
                           key={index}
@@ -344,24 +344,24 @@ const ProductCard = React.forwardRef<HTMLDivElement, ProductCardProps>(
                           alt={`${name} thumbnail ${index + 1}`}
                           width={80}
                           height={80}
-                          className="object-cover rounded-md"
+                          className="object-cover rounded-md min-w-[80px]"
                         />
                       ))}
                     </div>
 
                     {/* Middle Section: Main Image */}
-                    <div className="flex-1">
+                    <div className="flex-1 order-1 lg:order-2">
                       <ImageBlur
                         src={imageUrl || "/images/Image.png"}
                         alt={imageAlt || `${name} image`}
                         width={400}
                         height={400}
-                        className="object-cover rounded-md"
+                        className="object-cover rounded-md w-full max-h-[300px] lg:max-h-[400px]"
                       />
                     </div>
 
                     {/* Right Section: Product Details */}
-                    <div className="flex-1 space-y-4">
+                    <div className="flex-1 space-y-4 order-3">
                       <h2 className="text-lg font-bold">{name}</h2>
                       <div className="flex gap-4">
                         <button
@@ -380,7 +380,7 @@ const ProductCard = React.forwardRef<HTMLDivElement, ProductCardProps>(
                             "px-4 py-2 rounded-md",
                             activePrice === "bulk"
                               ? "bg-[#2CA22C] text-white"
-                              : " dark:bg-gray-700 text-[#80C780] dark:text-[#80C780]"
+                              : "dark:bg-gray-700 text-[#80C780] dark:text-[#80C780]"
                           )}
                           onClick={() => setActivePrice("bulk")}
                         >
@@ -423,12 +423,12 @@ const ProductCard = React.forwardRef<HTMLDivElement, ProductCardProps>(
                           +
                         </button>
                       </div>
-                        <button
+                      <button
                         className="w-full px-4 py-2 bg-[#2CA22C] text-white rounded-md hover:bg-green-600 cursor-pointer transition-all transform active:scale-95"
                         onClick={handleAddToCart}
-                        >
+                      >
                         Add to Cart
-                        </button>
+                      </button>
                       <div>
                         <h3 className="text-sm font-bold">
                           Category:
@@ -457,14 +457,14 @@ const ProductCard = React.forwardRef<HTMLDivElement, ProductCardProps>(
                   </div>
 
                   {/* Second Card: Description and Additional Info */}
-                  <div className="mt-6">
-                    <div className="flex">
+                  <div className="mt-6 p-4 pt-0">
+                    <div className="flex flex-wrap gap-2">
                       <button
                         className={cn(
                           "px-4 py-2 rounded-md",
                           activeTab === "description"
                             ? "bg-gray-200 text-gray-900"
-                            : " dark:bg-gray-700 dark:text-gray-300"
+                            : "dark:bg-gray-700 dark:text-gray-300"
                         )}
                         onClick={() => setActiveTab("description")}
                       >
@@ -475,7 +475,7 @@ const ProductCard = React.forwardRef<HTMLDivElement, ProductCardProps>(
                           "px-4 py-2 rounded-md",
                           activeTab === "additionalInfo"
                             ? "bg-gray-200 text-gray-900"
-                            : " dark:bg-gray-700 dark:text-gray-300"
+                            : "dark:bg-gray-700 dark:text-gray-300"
                         )}
                         onClick={() => setActiveTab("additionalInfo")}
                       >
@@ -505,10 +505,7 @@ const ProductCard = React.forwardRef<HTMLDivElement, ProductCardProps>(
                               <li>
                                 This product is crafted with the utmost care and
                                 attention to detail, ensuring it meets the
-                                highest standards of quality and performance. It
-                                is designed to provide exceptional value and
-                                versatility, making it suitable for a wide range
-                                of applications.
+                                highest standards of quality and performance.
                               </li>
                               <li>
                                 <strong>Category:</strong>{" "}
@@ -548,7 +545,7 @@ const ProductCard = React.forwardRef<HTMLDivElement, ProductCardProps>(
 
         {/* actions section for a hot deal product */}
         {isHotDeal && (
-          <div className="flex gap-3 justify-center px-1.5">
+          <div className="flex gap-3 justify-center px-1.5 pt-40 sm:pt-0">
             <button
               aria-label={`add ${name} to favourites`}
               className={cn(
