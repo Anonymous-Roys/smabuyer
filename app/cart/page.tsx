@@ -240,9 +240,12 @@ const ShoppingCartPage = () => {
                 <span className="text-green-600">${total.toFixed(2)}</span>
               </div>
 
-              <button className="w-full mt-6 px-6 py-3 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors font-medium cursor-pointer">
+              <Link
+                href="/cart/checkout"
+                className="w-full mt-6 px-6 py-3 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors font-medium text-center block"
+              >
                 Proceed to Checkout
-              </button>
+              </Link>
 
               <div className="mt-4 text-center text-sm text-gray-500 dark:text-gray-400">
                 <p>or</p>
