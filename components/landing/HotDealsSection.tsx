@@ -50,6 +50,12 @@ const HotDealsSection: React.FC = () => {
                 rating={product.rating}
                 discount={product.discount}
                 imageAlt={product.imageAlt}
+                farmer={product.farmer}
+                category={product.category}
+                tags={product.tags}
+                description={product.description}
+                additionalInfo={product.additionalInfo}
+                bulkPrice={product.bulkPrice}
               />
             ))}
           </div>

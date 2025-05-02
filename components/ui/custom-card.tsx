@@ -57,11 +57,31 @@ const ProductCard = React.forwardRef<HTMLDivElement, ProductCardProps>(
       imageAlt = "",
       isHotDeal = false,
       endDate,
+      productsRemaining,
+      bulkPrice,
+      category,
+      tags,
+      farmer,
+      description,
+      additionalInfo,
       ...props
     },
     ref
   ) => {
     const [isInCart, setIsInCart] = React.useState(false);
+    const [showAddedNotification, setShowAddedNotification] =
+      React.useState(false);
+    const [activePrice, setActivePrice] = React.useState<"unit" | "bulk">(
+      "unit"
+    );
+    const [showOverlay, setShowOverlay] = React.useState(() => {
+      if (typeof window !== "undefined") {
+        const overlayVisible = localStorage.getItem("overlayVisible");
+        return overlayVisible === "true";
+      }
+      return false;
+    });
+    const [quantity, setQuantity] = React.useState(1);
     const [hotDealExpired, setHotDealExpired] = React.useState(false);
     const [timeLeft, setTimeLeft] = React.useState({
       days: 0,
@@ -69,20 +89,96 @@ const ProductCard = React.forwardRef<HTMLDivElement, ProductCardProps>(
       minutes: 0,
       seconds: 0,
     });
+    const [activeTab, setActiveTab] = React.useState<
+      "description" | "additionalInfo"
+    >("description");
     const defaultEndDate = React.useMemo(
       () => new Date(Date.now() + 2 * 24 * 60 * 60 * 1000),
       []
     );
+
+    React.useEffect(() => {
+      const overlayVisible = localStorage.getItem("overlayVisible");
+      console.log("Current overlayVisible in localStorage:", overlayVisible);
+    }, [showOverlay]);
+
+    // Also add a log when the component mounts
+    React.useEffect(() => {
+      const initialValue = localStorage.getItem("overlayVisible");
+      console.log("Initial overlayVisible from localStorage:", initialValue);
+    }, []);
 
     const effectiveEndDate = React.useMemo(
       () => endDate || defaultEndDate,
       [endDate, defaultEndDate]
     );
 
+    React.useEffect(() => {
+      localStorage.setItem("overlayVisible", showOverlay.toString());
+    }, [showOverlay]);
+
     const handleAddToCart = () => {
-      setIsInCart((prev) => !prev);
-      console.log(`${name} ${!isInCart ? "added to" : "removed from"} cart`);
+      const cartItem = {
+        id: props.id || Date.now().toString(),
+        name,
+        price,
+        discountedPrice: price * (1 - (discount || 0) / 100),
+        quantity,
+        imageUrl,
+        category,
+        farmer,
+      };
+
+      const existingCart =
+        typeof window !== "undefined"
+          ? JSON.parse(localStorage.getItem("cart") || "[]")
+          : [];
+
+      const existingItemIndex = existingCart.findIndex(
+        (item: { id: string }) => item.id === cartItem.id
+      );
+
+      if (existingItemIndex >= 0) {
+        existingCart[existingItemIndex].quantity += quantity;
+      } else {
+        existingCart.push(cartItem);
+      }
+
+      if (typeof window !== "undefined") {
+        localStorage.setItem("cart", JSON.stringify(existingCart));
+      }
+
+      setIsInCart(true);
+      setShowAddedNotification(true);
+      setShowOverlay(false);
+
+      // Hide notification after 3 seconds
+      setTimeout(() => {
+        setShowAddedNotification(false);
+      }, 3000);
+
+      console.log(`${name} added to cart`);
     };
+
+    // Add this useEffect to initialize cart state from localStorage
+    React.useEffect(() => {
+      if (typeof window !== "undefined") {
+        const existingCart = JSON.parse(localStorage.getItem("cart") || "[]");
+        type CartItem = {
+          id: string;
+          name: string;
+          price: number;
+          quantity: number;
+          imageUrl: string;
+          category?: string;
+          farmer?: string;
+        };
+        const isProductInCart = existingCart.some(
+          (item: CartItem) => item.name === name
+        );
+        setIsInCart(isProductInCart);
+      }
+    }, [name]);
 
     const formattedPrice = new Intl.NumberFormat("en-US", {
       style: "currency",
@@ -151,12 +247,38 @@ const ProductCard = React.forwardRef<HTMLDivElement, ProductCardProps>(
         )}
         {...props}
       >
+        {showAddedNotification && (
+          <div className="fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded-md shadow-lg z-[100000] flex items-center gap-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fillRule="evenodd"
+                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                clipRule="evenodd"
+              />
+            </svg>
+            <span>{name} added to cart!</span>
+          </div>
+        )}
         {/* Discount tag */}
+        {/* Discount and Hot Deal Tags */}
         {discount && (
-          <div className="absolute left-4 top-4 z-10 flex gap-3">
-            <div className="rounded-sm discount-tag-bg py-1 px-2 text-sm ">
+          <div
+            className={cn(
+              "absolute left-4 top-4 z-10 flex gap-3 transition-opacity",
+              showOverlay ? "opacity-0" : "opacity-100"
+            )}
+          >
+            {/* Discount Tag - Always shown if discount exists */}
+            <div className="rounded-sm bg-[#EA4B48] py-1 px-2 text-sm text-white">
               Sale {discount}%
             </div>
+
+            {/* Hot Deal Tag - Only shown if isHotDeal is true */}
             {isHotDeal && (
               <div className="rounded-sm bg-[#2388FF] py-1 px-2 text-sm text-white">
                 Hot Deal
@@ -170,7 +292,7 @@ const ProductCard = React.forwardRef<HTMLDivElement, ProductCardProps>(
             <button
               aria-label={`Add ${name} to cart`}
               className={cn(
-                "flex h-10 w-10 items-center cursor-pointer justify-center rounded-full transition-colors bg-white text-gray-700 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
+                "flex h-10 w-10 items-center cursor-pointer justify-center rounded-full transition-colors bg-white text-gray-700 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 group-hover:opacity-100 opacity-0"
               )}
             >
               <ImageBlur
@@ -183,8 +305,12 @@ const ProductCard = React.forwardRef<HTMLDivElement, ProductCardProps>(
             <button
               aria-label={`View ${name}`}
               className={cn(
-                "flex h-10 w-10 items-center cursor-pointer justify-center rounded-full transition-colors bg-white text-gray-700 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
+                "flex h-10 w-10 items-center cursor-pointer justify-center rounded-full transition-colors bg-white text-gray-700 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 group-hover:opacity-100 opacity-0"
               )}
+              onClick={() => {
+                setShowOverlay(true);
+                localStorage.setItem("overlayVisible", "true");
+              }}
             >
               <ImageBlur
                 src="/icons/eye.png"
@@ -193,6 +319,218 @@ const ProductCard = React.forwardRef<HTMLDivElement, ProductCardProps>(
                 height={20}
               />
             </button>
+
+            {showOverlay && (
+              <div className="fixed inset-0 flex pt-20 items-center justify-center bg-black/40 bg-opacity-50 z-[100000]">
+                <div className="bg-white dark:bg-gray-900 rounded-lg shadow-lg p-6 w-11/12 max-w-4xl relative">
+                  {/* Close button - the only way to close the overlay */}
+                  <button
+                    className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 text-2xl hover:bg-gray-200 rounded-full p-1 transition-all"
+                    onClick={() => {
+                      setShowOverlay(false);
+                      localStorage.removeItem("overlayVisible");
+                    }}
+                  >
+                    ✕
+                  </button>
+
+                  <div className="flex gap-6">
+                    {/* Left Section: Small Images */}
+                    <div className="flex flex-col gap-2">
+                      {[imageUrl, imageUrl, imageUrl].map((url, index) => (
+                        <ImageBlur
+                          key={index}
+                          src={url || "/images/Image.png"}
+                          alt={`${name} thumbnail ${index + 1}`}
+                          width={80}
+                          height={80}
+                          className="object-cover rounded-md"
+                        />
+                      ))}
+                    </div>
+
+                    {/* Middle Section: Main Image */}
+                    <div className="flex-1">
+                      <ImageBlur
+                        src={imageUrl || "/images/Image.png"}
+                        alt={imageAlt || `${name} image`}
+                        width={400}
+                        height={400}
+                        className="object-cover rounded-md"
+                      />
+                    </div>
+
+                    {/* Right Section: Product Details */}
+                    <div className="flex-1 space-y-4">
+                      <h2 className="text-lg font-bold">{name}</h2>
+                      <div className="flex gap-4">
+                        <button
+                          className={cn(
+                            "px-4 py-2 rounded-md",
+                            activePrice === "unit"
+                              ? "bg-[#2CA22C] text-white"
+                              : "dark:bg-gray-700 text-[#80C780] dark:text-gray-300"
+                          )}
+                          onClick={() => setActivePrice("unit")}
+                        >
+                          Unit Price
+                        </button>
+                        <button
+                          className={cn(
+                            "px-4 py-2 rounded-md",
+                            activePrice === "bulk"
+                              ? "bg-[#2CA22C] text-white"
+                              : " dark:bg-gray-700 text-[#80C780] dark:text-[#80C780]"
+                          )}
+                          onClick={() => setActivePrice("bulk")}
+                        >
+                          Bulk Price
+                        </button>
+                      </div>
+                      <div>
+                        {discountedPrice ? (
+                          <div className="flex items-center gap-2">
+                            <span className="text-xl font-bold text-green-500">
+                              {discountedPrice}
+                            </span>
+                            <span className="text-gray-500 line-through dark:text-gray-400">
+                              {formattedPrice}
+                            </span>
+                          </div>
+                        ) : (
+                          <span className="text-xl font-bold text-gray-900 dark:text-gray-50">
+                            {formattedPrice}
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">
+                        {productsRemaining} pieces left
+                      </p>
+                      <div className="flex items-center gap-4">
+                        <button
+                          className="px-4 py-2 bg-gray-200 rounded-md dark:bg-gray-700 dark:text-gray-300"
+                          onClick={() =>
+                            setQuantity((prev) => Math.max(prev - 1, 1))
+                          }
+                        >
+                          -
+                        </button>
+                        <span className="text-lg font-bold">{quantity}</span>
+                        <button
+                          className="px-4 py-2 bg-gray-200 rounded-md dark:bg-gray-700 dark:text-gray-300"
+                          onClick={() => setQuantity((prev) => prev + 1)}
+                        >
+                          +
+                        </button>
+                      </div>
+                        <button
+                        className="w-full px-4 py-2 bg-[#2CA22C] text-white rounded-md hover:bg-green-600 cursor-pointer transition-all transform active:scale-95"
+                        onClick={handleAddToCart}
+                        >
+                        Add to Cart
+                        </button>
+                      <div>
+                        <h3 className="text-sm font-bold">
+                          Category:
+                          <span className="text-sm text-gray-500 dark:text-gray-400">
+                            {category || "Not specified"}
+                          </span>
+                        </h3>
+                      </div>
+                      <div>
+                        <h3 className="text-sm font-bold">Tags:</h3>
+                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                          {tags?.join(", ")}
+                        </p>
+                      </div>
+                      <div className="flex items-center gap-4 mt-4">
+                        <ImageBlur
+                          src="/images/Ellipse.png"
+                          alt="Farmer"
+                          width={50}
+                          height={50}
+                          className="rounded-full"
+                        />
+                        <span className="text-sm font-bold">{farmer}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Second Card: Description and Additional Info */}
+                  <div className="mt-6">
+                    <div className="flex">
+                      <button
+                        className={cn(
+                          "px-4 py-2 rounded-md",
+                          activeTab === "description"
+                            ? "bg-gray-200 text-gray-900"
+                            : " dark:bg-gray-700 dark:text-gray-300"
+                        )}
+                        onClick={() => setActiveTab("description")}
+                      >
+                        Description
+                      </button>
+                      <button
+                        className={cn(
+                          "px-4 py-2 rounded-md",
+                          activeTab === "additionalInfo"
+                            ? "bg-gray-200 text-gray-900"
+                            : " dark:bg-gray-700 dark:text-gray-300"
+                        )}
+                        onClick={() => setActiveTab("additionalInfo")}
+                      >
+                        Additional Information
+                      </button>
+                    </div>
+                    <div className="mt-4">
+                      {activeTab === "description" && (
+                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                          {description ||
+                            "This product is a high-quality item designed to meet your needs and expectations. Crafted with precision and care, it offers exceptional value and performance. Whether you're looking for something functional, stylish, or both, this product is sure to impress. It is made from premium materials to ensure durability and longevity, making it a reliable choice for everyday use or special occasions. The design is both modern and timeless, blending seamlessly into any setting or lifestyle. This product is versatile and can be used in a variety of ways, providing you with flexibility and convenience."}
+                        </p>
+                      )}
+                      {activeTab === "additionalInfo" && (
+                        <ul className="text-sm text-gray-500 dark:text-gray-400">
+                          {additionalInfo &&
+                          Object.keys(additionalInfo).length > 0 ? (
+                            Object.entries(additionalInfo).map(
+                              ([key, value]) => (
+                                <li key={key}>
+                                  (<strong>{key}:</strong>) {value}
+                                </li>
+                              )
+                            )
+                          ) : (
+                            <ul className="mt-10">
+                              <li>
+                                This product is crafted with the utmost care and
+                                attention to detail, ensuring it meets the
+                                highest standards of quality and performance. It
+                                is designed to provide exceptional value and
+                                versatility, making it suitable for a wide range
+                                of applications.
+                              </li>
+                              <li>
+                                <strong>Category:</strong>{" "}
+                                {category || "Not specified"}
+                              </li>
+                              <li>
+                                <strong>Tags:</strong>{" "}
+                                {tags?.join(", ") || "No tags available"}
+                              </li>
+                              <li>
+                                <strong>Weight:</strong>{" "}
+                                {additionalInfo?.weight || "Not specified"}
+                              </li>
+                            </ul>
+                          )}
+                        </ul>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         )}
 
