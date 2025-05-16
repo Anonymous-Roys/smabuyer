@@ -3,6 +3,7 @@ import { Metadata } from "next";
 import Hero from "@/components/landing/HeroSection";
 import BaseIcon from "@/components/landing/Base-content";
 import ProductCard from "@/components/ui/custom-card";
+import Banner from "@/components/landing/Banner";
 export const meta: Metadata = {
   title: "Customers",
   description: "Customers",
@@ -13,6 +14,7 @@ const HomePage = () => {
     <main className=" mx-auto">
       <Hero />
       <BaseIcon />
+      <Banner/>
       <div  className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {Array.from([1, 2, 3, 4]).map((item, idx) => (
           <ProductCard
