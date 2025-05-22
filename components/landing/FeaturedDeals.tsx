@@ -6,8 +6,8 @@ import Link from "next/link";
 
 const FeaturedDeals: React.FC = () => {
   return (
-    <section className="hot-deals-section px-6 sm:px-20 py-10 space-y-8">
-      <h2 className="section-title flex justify-between items-center">
+    <section className="hot-deals-section px-3 sm:px-6  py-10 space-y-8">
+      <h2 className="section-title flex justify-between px-2 items-center">
         <span className="block text-2xl font-bold">Featured Products</span>
         <span className="flex text-[#00B207] gap-3 items-center">
           <Link href="/products" passHref>
