@@ -16,5 +16,5 @@ interface ProductCardProps extends React.HTMLAttributes<HTMLDivElement> {
   tags?: string[];
   farmer?: string;
   description?: string;
-  additionalInfo?: Record<string, string | number | boolean>;
+  // additionalInfo?: Record<string, string | number | boolean>;
 }
