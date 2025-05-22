@@ -8,12 +8,14 @@ export const meta: Metadata = {
 };
 import HotDealsSection from "@/components/landing/HotDealsSection";
 import FeaturedDeals from "@/components/landing/FeaturedDeals";
+import Banner from "@/components/landing/Banner";
 
 const HomePage = () => {
   return (
     <main className=" mx-auto">
       <Hero />
       <BaseIcon />
+      <Banner />
       <HotDealsSection />
       <FeaturedDeals />
     </main>
