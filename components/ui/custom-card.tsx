@@ -269,8 +269,8 @@ const ProductCard = React.forwardRef<HTMLDivElement, ProductCardProps>(
         {discount && (
           <div
             className={cn(
-              "absolute left-4 top-4 z-10 flex gap-3 transition-opacity",
-              showOverlay ? "opacity-0" : "opacity-100"
+              "absolute z-10 flex gap-3 transition-opacity",
+              showOverlay ? "opacity-0" : "opacity-100", isHotDeal ? "left-4 top-4": "sm:left-4 sm:top-4"
             )}
           >
             {/* Discount Tag - Always shown if discount exists */}
