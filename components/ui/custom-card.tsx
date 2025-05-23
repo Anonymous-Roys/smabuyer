@@ -613,7 +613,7 @@ const ProductCard = React.forwardRef<HTMLDivElement, ProductCardProps>(
               </h3>
               <div>
                 {discountedPrice ? (
-                  <div className={`flex  ${!isHotDeal ? 'flex-col sm:flex-row sm:items-center': 'items-center justify-center space-x-2'}`}>
+                  <div className={`flex  ${!isHotDeal ? 'flex-col sm:flex-row sm:items-center sm:space-x-2': 'items-center justify-center space-x-2'}`}>
                     <span className="font-bold">{discountedPrice}</span>
                     <span className="text-gray-500 line-through dark:text-gray-400">
                       {formattedPrice}
