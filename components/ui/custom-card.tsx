@@ -239,7 +239,7 @@ const ProductCard = React.forwardRef<HTMLDivElement, ProductCardProps>(
       <div
         ref={ref}
         className={cn(
-          "group relative overflow-hidden border bg-white shadow-sm transition-all hover:shadow-md dark:border-gray-800 dark:bg-gray-950",
+          "group relative overflow-hidden border bg-white flex flex-col justify-between shadow-sm transition-all hover:shadow-md dark:border-gray-800 dark:bg-gray-950",
           isInCart
             ? "border-[#2C742F] shadow-[0_0_10px_rgba(34,197,94,0.5)]"
             : "border-gray-200",
@@ -603,9 +603,9 @@ const ProductCard = React.forwardRef<HTMLDivElement, ProductCardProps>(
                 : "justify-between flex items-center"
             )}
           >
-            <div className={cn(isHotDeal ? "space-y-1" : "")}>
+            <div className={cn(isHotDeal ? "space-y-1 w-full flex-col items-center justify-center" : "")}>
               <h3
-                className={`line-clamp-1 text-sm font-medium ${
+                className={`line-clamp-1 font-medium ${isHotDeal ? 'text-center text-2xl': ' text-sm'} ${
                   !isInCart ? "text-gray-900" : "isInCart-name-color"
                 }  dark:text-gray-50`}
               >
@@ -613,7 +613,7 @@ const ProductCard = React.forwardRef<HTMLDivElement, ProductCardProps>(
               </h3>
               <div>
                 {discountedPrice ? (
-                  <div className="flex items-center gap-2">
+                  <div className={`flex  ${!isHotDeal ? 'flex-col sm:flex-row sm:items-center': 'items-center justify-center space-x-2'}`}>
                     <span className="font-bold">{discountedPrice}</span>
                     <span className="text-gray-500 line-through dark:text-gray-400">
                       {formattedPrice}
@@ -626,8 +626,8 @@ const ProductCard = React.forwardRef<HTMLDivElement, ProductCardProps>(
                 )}
               </div>
               <div
-                className={`flex items-center gap-1 ${
-                  isHotDeal ? "-ml-3" : ""
+                className={`flex  gap-1 ${
+                  isHotDeal ? "-ml-3 items-center justify-center" : "flex-col sm:flex-row sm:items-center"
                 }`}
               >
                 <span className="text-md text-orange-400">
@@ -635,7 +635,7 @@ const ProductCard = React.forwardRef<HTMLDivElement, ProductCardProps>(
                     <span key={i}>{i < Math.floor(rating) ? "★" : "☆"}</span>
                   ))}
                 </span>
-                <span className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                <span className={`text-xs text-gray-500 dark:text-gray-400 ${isHotDeal ? 'mt-1':''}`}>
                   ({rating.toFixed(1)} {isHotDeal ? "Feedback" : ""})
                 </span>
               </div>
