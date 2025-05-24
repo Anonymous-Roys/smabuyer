@@ -3,6 +3,7 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 import { ProductCardProps } from "@/types/custom-card";
 import ImageBlur from "../common/ImageBlur";
+import CountDownShift from "../custom/CountDownItem";
 
 /**
  * `ProductCard` is a reusable React component that displays a product card with details such as
@@ -663,11 +664,11 @@ const ProductCard = React.forwardRef<HTMLDivElement, ProductCardProps>(
               </button>
             )}
             {isHotDeal && !hotDealExpired ? (
-              <div className="pb-4">
+              <div className="pb-4 ">
                 <p className="text-center mt-4 text-gray-500 dark:text-gray-400">
                   Hurry up! Offer ends In:
                 </p>
-                <ul className="flex gap-10">
+                {/* <ul className="flex gap-10">
                   <li className="flex flex-col items-center">
                     <span> {timeLeft.days} </span>
                     <span>DAYS</span>
@@ -688,7 +689,10 @@ const ProductCard = React.forwardRef<HTMLDivElement, ProductCardProps>(
                       <span>SECS</span>
                     </li>
                   </div>
-                </ul>
+                </ul> */}
+                <div className="flex justify-center items-center px-4">
+                <CountDownShift/>
+                </div>
               </div>
             ) : (
               isHotDeal && (
