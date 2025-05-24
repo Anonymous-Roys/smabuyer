@@ -2,6 +2,7 @@
 
 import { useAnimate } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
+import { HOTDEAL } from "@/constants/products";
 
 // Constants for time calculations
 const SECOND = 1000;
@@ -10,7 +11,7 @@ const HOUR = 60 * MINUTE;
 const DAY = 24 * HOUR;
 
 // Countdown target date
-const COUNTDOWN_FROM = new Date("2025-05-21T00:00:00Z").getTime();
+const COUNTDOWN_FROM = HOTDEAL.endDate.getTime();
 
 type TimeUnit = "DAY" | "HOUR" | "MINUTE" | "SECOND";
 

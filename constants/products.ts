@@ -161,11 +161,12 @@ const PRODUCTS: ProductCardProps[] = [
 export default PRODUCTS;
 
 export const HOTDEAL = {
-  imageUrl: "/images/product5.jpg",
-  name: "Green Capsicum",
-  price: 20.99,
-  rating: 4.7,
-  discount: 50,
-  imageAlt: "Product 5 Image",
-  isHotDeal: true,
+    imageUrl: "/images/product5.jpg",
+    name: "Green Capsicum",
+    price: 20.99,
+    rating: 4.7,
+    discount: 50,
+    imageAlt: "Product 5 Image",
+    isHotDeal: true,
+    endDate: new Date("2025-05-31T00:00:00Z"),
 };

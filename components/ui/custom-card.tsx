@@ -690,7 +690,7 @@ const ProductCard = React.forwardRef<HTMLDivElement, ProductCardProps>(
                     </li>
                   </div>
                 </ul> */}
-                <div className="flex justify-center items-center px-4">
+                <div className="">
                 <CountDownShift/>
                 </div>
               </div>
