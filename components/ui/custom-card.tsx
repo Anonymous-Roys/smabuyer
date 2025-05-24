@@ -57,14 +57,13 @@ const ProductCard = React.forwardRef<HTMLDivElement, ProductCardProps>(
       discount,
       imageAlt = "",
       isHotDeal = false,
-      endDate,
       productsRemaining,
-      bulkPrice,
       category,
       tags,
       farmer,
       description,
       additionalInfo,
+      bulkPrice,
       ...props
     },
     ref
@@ -83,20 +82,11 @@ const ProductCard = React.forwardRef<HTMLDivElement, ProductCardProps>(
       return false;
     });
     const [quantity, setQuantity] = React.useState(1);
-    const [hotDealExpired, setHotDealExpired] = React.useState(false);
-    const [timeLeft, setTimeLeft] = React.useState({
-      days: 0,
-      hours: 0,
-      minutes: 0,
-      seconds: 0,
-    });
+   
     const [activeTab, setActiveTab] = React.useState<
       "description" | "additionalInfo"
     >("description");
-    const defaultEndDate = React.useMemo(
-      () => new Date(Date.now() + 2 * 24 * 60 * 60 * 1000),
-      []
-    );
+    
 
     React.useEffect(() => {
       const overlayVisible = localStorage.getItem("overlayVisible");
@@ -108,11 +98,6 @@ const ProductCard = React.forwardRef<HTMLDivElement, ProductCardProps>(
       const initialValue = localStorage.getItem("overlayVisible");
       console.log("Initial overlayVisible from localStorage:", initialValue);
     }, []);
-
-    const effectiveEndDate = React.useMemo(
-      () => endDate || defaultEndDate,
-      [endDate, defaultEndDate]
-    );
 
     React.useEffect(() => {
       localStorage.setItem("overlayVisible", showOverlay.toString());
@@ -192,49 +177,6 @@ const ProductCard = React.forwardRef<HTMLDivElement, ProductCardProps>(
           currency: "USD",
         }).format(price * (1 - discount / 100))
       : null;
-
-    React.useEffect(() => {
-      if (!isHotDeal) return;
-
-      // Debugging logs
-      const updateCountdown = () => {
-        const now = new Date();
-        const difference = effectiveEndDate.getTime() - now.getTime();
-
-        if (difference <= 0) {
-          console.log("Countdown expired!");
-          setHotDealExpired(true);
-          setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
-          return;
-        }
-
-        // Calculate time units
-        const seconds = Math.floor(difference / 1000);
-        const minutes = Math.floor(seconds / 60);
-        const hours = Math.floor(minutes / 60);
-        const days = Math.floor(hours / 24);
-
-        setTimeLeft({
-          days,
-          hours: hours % 24,
-          minutes: minutes % 60,
-          seconds: seconds % 60,
-        });
-      };
-
-      // Initial call
-      updateCountdown();
-
-      // Set up interval
-      const intervalId = setInterval(updateCountdown, 1000);
-      console.log("Interval set with ID:", intervalId);
-
-      // Cleanup
-      return () => {
-        console.log("Clearing interval with ID:", intervalId);
-        clearInterval(intervalId);
-      };
-    }, [effectiveEndDate, isHotDeal]);
 
     return (
       <div
@@ -663,7 +605,7 @@ const ProductCard = React.forwardRef<HTMLDivElement, ProductCardProps>(
                 />
               </button>
             )}
-            {isHotDeal && !hotDealExpired ? (
+            {isHotDeal ? (
               <div className="pb-4 ">
                 <p className="text-center mt-4 text-gray-500 dark:text-gray-400">
                   Hurry up! Offer ends In:
