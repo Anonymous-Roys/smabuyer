@@ -5,6 +5,7 @@ import BaseIcon from "@/components/landing/Base-content";
 
 import ProductCard from "@/components/ui/custom-card";
 import Banner from "@/components/landing/Banner";
+import ProductCardDemo from "@/components/ui/product/product-card-demo";
 
 export const meta: Metadata = {
   title: "Customers",
@@ -32,6 +33,7 @@ const HomePage = () => {
           />
         ))}
       </div>
+      <ProductCardDemo/>
     </main>
   );
 };

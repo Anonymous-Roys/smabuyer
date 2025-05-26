@@ -10,4 +10,5 @@ interface ProductCardProps extends React.HTMLAttributes<HTMLDivElement> {
   imagePriority?: boolean;
   isHotDeal?: boolean;
   endDate?: Date;
+  className?: string;
 }

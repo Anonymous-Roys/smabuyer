@@ -7,7 +7,9 @@ type ProductCategory =  | 'fruits'
   | 'herbs'
   | 'spices'
   | 'seeds'
-    | 'other';
+  | 'roots'
+  | 'greens'
+  | 'other';
   
 
 type ProductStatus = "draft" | "active" | "out_of_stock" | "deleted" | "inactive";
@@ -53,6 +55,7 @@ interface Product {
   featured: boolean;
   metaTitle?: string;
   metaDescription?: string;
+  tags?: string[];
 }
 
  type OrderStatus = 
@@ -63,6 +66,14 @@ interface Product {
   | 'cancelled' 
   | 'refunded';
 
+
+type PaymentStatus =
+  | 'pending'
+  | 'processing'
+  | 'completed'
+  | 'failed'
+  | 'refunded'
+  | 'cancelled';
 
   interface OrderItem {
   id: string;
@@ -120,4 +131,19 @@ interface Order {
   createdAt: Date;
   updatedAt: Date;
   completedAt?: Date;
+}
+
+
+export {
+  ProductCategory,
+  ProductStatus,
+  ProductImage,
+  ProductVariant,
+  Product,
+  OrderStatus,
+  PaymentStatus,
+  OrderItem,
+  ShippingInfo,
+  PaymentInfo,
+  Order
 }
