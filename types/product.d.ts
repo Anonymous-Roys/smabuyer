@@ -1,4 +1,5 @@
-type ProductCategory =  | 'fruits' 
+type ProductCategory =
+  | 'fruits' 
   | 'vegetables' 
   | 'grains' 
   | 'dairy' 
@@ -7,7 +8,7 @@ type ProductCategory =  | 'fruits'
   | 'herbs'
   | 'spices'
   | 'seeds'
-    | 'other';
+  | 'other';
   
 
 type ProductStatus = "draft" | "active" | "out_of_stock" | "deleted" | "inactive";
