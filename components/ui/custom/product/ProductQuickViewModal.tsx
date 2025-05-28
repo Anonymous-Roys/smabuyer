@@ -420,10 +420,6 @@ const ProductQuickViewModal: React.FC<ProductQuickViewModalProps> = ({
 
                     </div>
                   )}
-
-
-
-
                 </div>
               </div>
             </div>
