@@ -1,10 +1,10 @@
 "use client";
-import * as React from "react";
+import { useEffect, useState, useMemo, forwardRef } from "react";
 import { cn } from "@/lib/utils";
 import { EnhancedProductCardProps } from "@/types/product";
 import ImageBlur from "../../../common/ImageBlur";
 import ProductQuickViewModal from "./ProductQuickViewModal";
-import { Product } from "@/types/product";
+import { Product, CartItem } from "@/types/product";
 import CountDownShift from "@/components/ui/custom/timer/CountDownItem";
 
 /**
@@ -13,7 +13,7 @@ import CountDownShift from "@/components/ui/custom/timer/CountDownItem";
  * quick view modal functionality.
  */
 
-const ProductCard = React.forwardRef<HTMLDivElement, EnhancedProductCardProps>(
+const ProductCard = forwardRef<HTMLDivElement, EnhancedProductCardProps>(
   (
     {
       className,
@@ -29,13 +29,52 @@ const ProductCard = React.forwardRef<HTMLDivElement, EnhancedProductCardProps>(
     },
     ref
   ) => {
-    const [isInCart, setIsInCart] = React.useState(false);
+    const [isInCart, setIsInCart] = useState(false);
+    const [showAddedNotification, setShowAddedNotification] =
+      useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const [isModalOpen, setIsModalOpen] = React.useState(false);
+    const handleAddToCart = (quantity: number = 1) => {
+      const cartItem = {
+        id: (product && product.id) || Date.now().toString(),
+        name,
+        price,
+        discountedPrice: price * (1 - (discount || 0) / 100),
+        quantity: quantity,
+        imageUrl,
+        category:
+          (product && product.categories && product.categories[0]) ||
+          "Uncategorized",
+        farmer: (product && product.farmerId) || "Unknown",
+      };
 
-    const handleAddToCart = () => {
-      setIsInCart((prev) => !prev);
-      console.log(`${name} ${!isInCart ? "added to" : "removed from"} cart`);
+      const existingCart =
+        typeof window !== "undefined"
+          ? JSON.parse(localStorage.getItem("cart") || "[]")
+          : [];
+
+      const existingItemIndex = existingCart.findIndex(
+        (item: { id: string }) => item.id === cartItem.id
+      );
+
+      if (existingItemIndex >= 0) {
+        existingCart[existingItemIndex].quantity += quantity;
+      } else {
+        existingCart.push(cartItem);
+      }
+
+      if (typeof window !== "undefined") {
+        localStorage.setItem("cart", JSON.stringify(existingCart));
+      }
+
+      setIsInCart(true);
+      setShowAddedNotification(true);
+      // Hide notification after 3 seconds
+      setTimeout(() => {
+        setShowAddedNotification(false);
+      }, 3000);
+
+      console.log(`${name} added to cart`);
     };
 
     const handleOpenModal = (e: React.MouseEvent) => {
@@ -47,6 +86,16 @@ const ProductCard = React.forwardRef<HTMLDivElement, EnhancedProductCardProps>(
     const handleCloseModal = () => {
       setIsModalOpen(false);
     };
+
+    useEffect(() => {
+      if (typeof window !== "undefined") {
+        const existingCart = JSON.parse(localStorage.getItem("cart") || "[]");
+        const isProductInCart = existingCart.some(
+          (item: CartItem) => item.name === name
+        );
+        setIsInCart(isProductInCart);
+      }
+    }, [name]);
 
     const formattedPrice = new Intl.NumberFormat("en-US", {
       style: "currency",
@@ -61,7 +110,7 @@ const ProductCard = React.forwardRef<HTMLDivElement, EnhancedProductCardProps>(
       : null;
 
     // Create a mock product object if not provided
-    const displayProduct = React.useMemo((): Product => {
+    const displayProduct = useMemo((): Product => {
       if (product) return product;
 
       return {
@@ -110,6 +159,23 @@ const ProductCard = React.forwardRef<HTMLDivElement, EnhancedProductCardProps>(
 
     return (
       <>
+        {showAddedNotification && (
+          <div className="fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded-md shadow-lg z-[100000] flex items-center gap-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fillRule="evenodd"
+                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                clipRule="evenodd"
+              />
+            </svg>
+            <span>{name} added to cart!</span>
+          </div>
+        )}
         <div
           ref={ref}
           className={cn(
@@ -196,7 +262,7 @@ const ProductCard = React.forwardRef<HTMLDivElement, EnhancedProductCardProps>(
                 />
               </button>
               <button
-                onClick={handleAddToCart}
+                onClick={() => handleAddToCart()}
                 aria-label={`Add ${name} to cart`}
                 className={cn(
                   "flex h-10 w-1/2 space-x-5 items-center text-sm cursor-pointer justify-center rounded-full transition-colors",
@@ -302,7 +368,7 @@ const ProductCard = React.forwardRef<HTMLDivElement, EnhancedProductCardProps>(
             */}
               {!isHotDeal && (
                 <button
-                  onClick={handleAddToCart}
+                  onClick={()=> handleAddToCart()}
                   aria-label={`Add ${name} to cart`}
                   className={cn(
                     "flex h-10 w-10 items-center cursor-pointer justify-center rounded-full transition-colors",
@@ -342,6 +408,7 @@ const ProductCard = React.forwardRef<HTMLDivElement, EnhancedProductCardProps>(
           product={displayProduct}
           isOpen={isModalOpen}
           onClose={handleCloseModal}
+          handleAddToCart={handleAddToCart}
         />
       </>
     );

@@ -1,37 +1,41 @@
 type ProductCategory =
-  | 'fruits' 
-  | 'vegetables' 
-  | 'grains' 
-  | 'dairy' 
-  | 'meat' 
-  | 'poultry'
-  | 'herbs'
-  | 'spices'
-  | 'seeds'
-  | 'roots'
-  | 'greens'
-  | 'other';
-  
+  | "fruits"
+  | "vegetables"
+  | "grains"
+  | "dairy"
+  | "meat"
+  | "poultry"
+  | "herbs"
+  | "spices"
+  | "seeds"
+  | "roots"
+  | "greens"
+  | "other";
 
-type ProductStatus = "draft" | "active" | "out_of_stock" | "deleted" | "inactive";
+type ProductStatus =
+  | "draft"
+  | "active"
+  | "out_of_stock"
+  | "deleted"
+  | "inactive";
 
 interface ProductImage {
-    id: string;
-    url: string;
-    alt: string;
-    isPrimary: boolean;
+  id: string;
+  url: string;
+  alt: string;
+  isPrimary: boolean;
 }
 
 interface ProductVariant {
-    id: string;
-    name: string;
-    price: number;
-    comparedAtPrice?: number;
-    sku: string;
-    weight: number;
-    weightUnit: "kg" | "g" | "lb" | "oz";
-    stock: number;
-    isAvailable: boolean;
+  id: string;
+  name: string;
+  price: number;
+  comparedAtPrice?: number;
+  sku: string;
+  weight: number;
+  weightUnit: "kg" | "g" | "lb" | "oz";
+  stock: number;
+  isAvailable: boolean;
 }
 
 interface Product {
@@ -80,30 +84,40 @@ export interface ProductQuickViewModalProps {
   product: Product | null;
   isOpen: boolean;
   onClose: () => void;
+  handleAddToCart: (quantity: number) => void;
 }
 
 export interface EnhancedProductCardProps extends ProductCardProps {
   product?: Product;
 }
 
- type OrderStatus = 
-  | 'pending' 
-  | 'processing' 
-  | 'shipped' 
-  | 'delivered' 
-  | 'cancelled' 
-  | 'refunded';
-
+type OrderStatus =
+  | "pending"
+  | "processing"
+  | "shipped"
+  | "delivered"
+  | "cancelled"
+  | "refunded";
 
 type PaymentStatus =
-  | 'pending'
-  | 'processing'
-  | 'completed'
-  | 'failed'
-  | 'refunded'
-  | 'cancelled';
+  | "pending"
+  | "processing"
+  | "completed"
+  | "failed"
+  | "refunded"
+  | "cancelled";
 
-  interface OrderItem {
+export interface CartItem {
+  id: string;
+  name: string;
+  price: number;
+  quantity: number;
+  imageUrl: string;
+  category?: string;
+  farmer?: string;
+};
+
+interface OrderItem {
   id: string;
   productId: string;
   productName: string;
@@ -113,7 +127,7 @@ type PaymentStatus =
   price: number;
   total: number;
   weight: number;
-  weightUnit: 'kg' | 'g' | 'lb' | 'oz';
+  weightUnit: "kg" | "g" | "lb" | "oz";
   farmerId: string;
 }
 
@@ -161,7 +175,6 @@ interface Order {
   completedAt?: Date;
 }
 
-
 export {
   ProductCategory,
   ProductStatus,
@@ -173,5 +186,5 @@ export {
   OrderItem,
   ShippingInfo,
   PaymentInfo,
-  Order
-}
+  Order,
+};

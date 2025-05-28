@@ -11,6 +11,7 @@ const ProductQuickViewModal: React.FC<ProductQuickViewModalProps> = ({
   product,
   isOpen,
   onClose,
+  handleAddToCart
 }) => {
   const [quantity, setQuantity] = React.useState(1);
   const [selectedVariantIndex, setSelectedVariantIndex] = React.useState(0);
@@ -366,7 +367,7 @@ const ProductQuickViewModal: React.FC<ProductQuickViewModalProps> = ({
                 </div>
 
                 <button
-                  onClick={() => { console.log(`Added ${quantity} ${product.name} to cart`); }}
+                  onClick={() => handleAddToCart(quantity)}
                   disabled={!selectedVariant?.isAvailable}
                   className={cn(
                     "flex flex-1 items-center justify-center gap-2 rounded-full py-3 text-sm font-medium text-white transition-colors",
