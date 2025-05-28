@@ -1,12 +1,7 @@
 import React from "react";
-import ImageBlur from "../common/ImageBlur";
+import ImageBlur from "../../../common/ImageBlur";
+import { PostsCardProps } from "@/types/posts";
 
-interface PostsCardProps {
-  date: string;
-  heading: string;
-  imageUrl?: string;
-  text: string;
-}
 
 const PostsCard: React.FC<PostsCardProps> = ({
   date,
@@ -30,21 +25,21 @@ const PostsCard: React.FC<PostsCardProps> = ({
       </div>
 
       {/* Body */}
-      <div className="body flex items-start">
+      <div className="body flex flex-col">
         {/* Image */}
-        <div className="image w-fit h-16 flex-shrink-0 mr-4 pl-1">
+        <div className="image w-full h-16 flex-shrink-0 mr-4 pl-1">
           <ImageBlur
             src={imageUrl || defaultImageUrl}
             alt="post image"
-            width={160}
-            height={160}
+            width={260}
+            height={260}
           />
         </div>
 
         {/* Text */}
         <div className="text text-gray-800 text-md px-1 pb-3">
           <h3 className="font-bold">{heading}</h3>
-          <h3 >{text}</h3>
+          <h3>{text}</h3>
         </div>
       </div>
     </div>

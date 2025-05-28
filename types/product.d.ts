@@ -8,6 +8,8 @@ type ProductCategory =
   | 'herbs'
   | 'spices'
   | 'seeds'
+  | 'roots'
+  | 'greens'
   | 'other';
   
 
@@ -33,7 +35,7 @@ interface ProductVariant {
 }
 
 interface Product {
- id: string;
+  id: string;
   farmerId: string;
   name: string;
   slug: string;
@@ -54,6 +56,34 @@ interface Product {
   featured: boolean;
   metaTitle?: string;
   metaDescription?: string;
+  tags?: string[];
+}
+
+interface ProductCardProps {
+  imageUrl?: string;
+  name: string;
+  price: number;
+  rating: number;
+  discount?: number;
+  imageAlt?: string;
+  imagePriority?: boolean;
+  isHotDeal?: boolean;
+  endDate?: Date;
+  className?: string;
+}
+
+export interface ProductDetailPageProps {
+  product: Product;
+}
+
+export interface ProductQuickViewModalProps {
+  product: Product | null;
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+export interface EnhancedProductCardProps extends ProductCardProps {
+  product?: Product;
 }
 
  type OrderStatus = 
@@ -64,6 +94,14 @@ interface Product {
   | 'cancelled' 
   | 'refunded';
 
+
+type PaymentStatus =
+  | 'pending'
+  | 'processing'
+  | 'completed'
+  | 'failed'
+  | 'refunded'
+  | 'cancelled';
 
   interface OrderItem {
   id: string;
@@ -121,4 +159,19 @@ interface Order {
   createdAt: Date;
   updatedAt: Date;
   completedAt?: Date;
+}
+
+
+export {
+  ProductCategory,
+  ProductStatus,
+  ProductImage,
+  ProductVariant,
+  Product,
+  OrderStatus,
+  PaymentStatus,
+  OrderItem,
+  ShippingInfo,
+  PaymentInfo,
+  Order
 }

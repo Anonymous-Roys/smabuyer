@@ -1,9 +1,9 @@
 import React from "react";
-import ProductCard from "../ui/custom-card";
-import PRODUCTS from "@/constants/products";
+import ProductCard from "../ui/custom/product/custom-product-card";
+import PRODUCTS from "@/constants/mock-data";
 import ImageBlur from "../common/ImageBlur";
 import SummerSaleCard from "../ui/summer-sale-card";
-import { HOTDEAL } from "@/constants/products";
+import { HOTDEAL } from "@/constants/mock-data";
 import Link from "next/link";
 
 const HotDealsSection: React.FC = () => {
@@ -30,30 +30,34 @@ const HotDealsSection: React.FC = () => {
       <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
         <div className="col-span-2 sm:col-span-2 md:col-span-2 row-span-1 sm:row-span-2">
           <ProductCard
-        imageUrl={HOTDEAL.imageUrl}
-        name={HOTDEAL.name}
-        price={HOTDEAL.price}
-        rating={HOTDEAL.rating}
-        discount={HOTDEAL.discount}
-        imageAlt={HOTDEAL.imageAlt}
-        isHotDeal={HOTDEAL.isHotDeal}
+            imageUrl={HOTDEAL.imageUrl}
+            name={HOTDEAL.name}
+            price={HOTDEAL.price}
+            rating={HOTDEAL.rating}
+            discount={HOTDEAL.discount}
+            imageAlt={HOTDEAL.imageAlt}
+            isHotDeal={HOTDEAL.isHotDeal}
           />
         </div>
-        {PRODUCTS.map((product, index) => (
+        {PRODUCTS.map((product) => (
           <ProductCard
-        key={index}
-        imageUrl={product.imageUrl}
-        name={product.name}
-        price={product.price}
-        rating={product.rating}
-        discount={product.discount}
-        imageAlt={product.imageAlt}
-        farmer={product.farmer}
-        category={product.category}
-        tags={product.tags}
-        description={product.description}
-        additionalInfo={product.additionalInfo}
-        bulkPrice={product.bulkPrice}
+            key={product.id}
+            imageUrl={product.images[0]?.url || "/images/Image.png"}
+            name={product.name}
+            price={product.variants[0]?.price || 0}
+            rating={product.averageRating}
+            discount={
+              product.variants[0]?.comparedAtPrice
+                ? Math.round(
+                    ((product.variants[0].comparedAtPrice -
+                      product.variants[0].price) /
+                      product.variants[0].comparedAtPrice) *
+                      100
+                  )
+                : 0
+            }
+            imageAlt={product.images[0]?.alt || ""}
+            product={product}
           />
         ))}
       </div>

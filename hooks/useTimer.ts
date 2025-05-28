@@ -2,7 +2,7 @@
 
 import { useAnimate } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import { HOTDEAL } from "@/constants/products";
+import { HOTDEAL } from "@/constants/mock-data";
 
 // Constants for time calculations
 const SECOND = 1000;

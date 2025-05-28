@@ -2,7 +2,7 @@
 import useTimer from "@/hooks/useTimer";
 import { motion } from "framer-motion";
 import React from "react";
-type TimeUnit = "DAY" | "HOUR" | "MINUTE" | "SECOND";
+import { TimeUnit } from "@/types/time.types";
 
 const CountDownShift = () => {
   return (

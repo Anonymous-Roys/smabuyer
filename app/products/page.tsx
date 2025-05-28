@@ -1,11 +1,11 @@
 "use client";
 
 import React from "react";
-import PostCard from "@/components/ui/posts-card";
-import ProductCard from "@/components/ui/custom-card";
+import PostCard from "@/components/ui/custom/post/posts-card";
+import ProductCard from "@/components/ui/custom/product/custom-product-card";
 import ImageBlur from "@/components/common/ImageBlur";
 import SearchComp from "@/components/ui/search-comp";
-import PRODUCTS from "@/constants/products";
+import PRODUCTS from "@/constants/mock-data";
 
 const ProductsPage = () => {
   const posts = [
@@ -59,7 +59,6 @@ const ProductsPage = () => {
         <div className="flex justify-end mb-6">
           <SearchComp />
         </div>
-
         <div className="products">
           <header className="flex flex-wrap justify-between gap-2">
             {tabs.map((tab, index) => (
@@ -75,23 +74,27 @@ const ProductsPage = () => {
               </button>
             ))}
           </header>
-          <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-          {PRODUCTS.map((product, index) => (
-               <ProductCard
-               key={index}
-               imageUrl={product.imageUrl}
-               name={product.name}
-               price={product.price}
-               rating={product.rating}
-               discount={product.discount}
-               imageAlt={product.imageAlt}
-               farmer={product.farmer}
-               category={product.category}
-               tags={product.tags}
-               description={product.description}
-               additionalInfo={product.additionalInfo}
-               bulkPrice={product.bulkPrice}
-             />
+          <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+            {PRODUCTS.map((product) => (
+              <ProductCard
+                key={product.id}
+                imageUrl={product.images[0]?.url || "/images/Image.png"}
+                name={product.name}
+                price={product.variants[0]?.price || 0}
+                rating={product.averageRating}
+                discount={
+                  product.variants[0]?.comparedAtPrice
+                    ? Math.round(
+                        ((product.variants[0].comparedAtPrice -
+                          product.variants[0].price) /
+                          product.variants[0].comparedAtPrice) *
+                          100
+                      )
+                    : 0
+                }
+                imageAlt={product.images[0]?.alt || ""}
+                product={product}
+              />
             ))}
           </div>
         </div>
