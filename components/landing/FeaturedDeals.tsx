@@ -6,7 +6,7 @@ import Link from "next/link";
 
 const FeaturedDeals: React.FC = () => {
   return (
-    <section className="hot-deals-section px-3 sm:px-6  py-10 space-y-8">
+    <section className="container mx-auto px-4 py-10 space-y-8">
       <h2 className="section-title flex justify-between px-2 items-center">
         <span className="block text-2xl font-bold">Featured Products</span>
         <span className="flex text-[#00B207] gap-3 items-center">

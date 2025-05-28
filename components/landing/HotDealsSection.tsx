@@ -2,13 +2,13 @@ import React from "react";
 import ProductCard from "../ui/custom/product/custom-product-card";
 import PRODUCTS from "@/constants/mock-data";
 import ImageBlur from "../common/ImageBlur";
-import SummerSaleCard from "../ui/summer-sale-card";
+import SummerSaleCard from "../ui/custom/banners/summer-sale-card";
 import { HOTDEAL } from "@/constants/mock-data";
 import Link from "next/link";
 
 const HotDealsSection: React.FC = () => {
   return (
-    <section className="hot-deals-section px-3 sm:px-6  py-10 space-y-8">
+    <section className="container mx-auto px-4 py-10 space-y-8">
       <h2 className="section-title flex justify-between items-center px-2">
         <span className="block text-2xl font-bold ">Hot Deals</span>
         <span className="flex text-[#00B207] gap-3 items-center cursor-pointer">

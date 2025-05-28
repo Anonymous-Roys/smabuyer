@@ -43,7 +43,7 @@ const ProductsPage = () => {
   ];
 
   return (
-    <div className="flex flex-col lg:flex-row pt-10 px-4 lg:px-10 mt-30">
+    <div className="flex flex-col lg:flex-row pt-10 container mx-auto px-4 mt-30">
       <div className="posts w-full lg:w-1/4 lg:pr-4 space-y-5 mb-6 lg:mb-0">
         {posts.map((post, index) => (
           <PostCard

@@ -1,5 +1,5 @@
 import React from "react";
-import ImageBlur from "../common/ImageBlur";
+import ImageBlur from "../../../common/ImageBlur";
 
 const SummerSaleCard: React.FC = () => {
   return (
