@@ -5,6 +5,8 @@ import { ProductCardProps } from "@/types/custom-card";
 import ImageBlur from "../../common/ImageBlur";
 import ProductQuickViewModal from "./ProductQuickViewModal";
 import { Product } from "@/types/product";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 // Extended interface to include the product object
 interface EnhancedProductCardProps extends ProductCardProps {
@@ -34,7 +36,7 @@ const ProductCard = React.forwardRef<HTMLDivElement, EnhancedProductCardProps>(
     ref
   ) => {
     const [isInCart, setIsInCart] = React.useState(false);
-  
+    const router = useRouter(); // Initialize the router
     const [isModalOpen, setIsModalOpen] = React.useState(false);
   
   
@@ -65,10 +67,16 @@ const ProductCard = React.forwardRef<HTMLDivElement, EnhancedProductCardProps>(
         }).format(price * (1 - discount / 100))
       : null;
 
+ const handleNameClick = (e: React.MouseEvent) => {
+      e.preventDefault();
+      router.push(`/products/${displayProduct.slug}`);
+    };
 
     // Create a mock product object if not provided
     const displayProduct = React.useMemo((): Product => {
   if (product) return product;
+
+  
 
   return {
     id: "mock-id",
@@ -248,7 +256,15 @@ const ProductCard = React.forwardRef<HTMLDivElement, EnhancedProductCardProps>(
                     !isInCart ? "text-gray-900" : "isInCart-name-color"
                   }  dark:text-gray-50`}
                 >
+                  <Link 
+                  href={`/products/${displayProduct.slug}`} 
+                  onClick={handleNameClick}
+                  className={`line-clamp-1 text-sm font-medium ${
+                    !isInCart ? "text-gray-900" : "isInCart-name-color"
+                  } hover:text-green-600 dark:text-gray-50 dark:hover:text-green-400`}
+                >
                   {name}
+                </Link>
                 </h3>
                 <div>
                   {discountedPrice ? (

@@ -1,7 +1,7 @@
-import { getProductBySlug, products } from "@/components/ui/product/product-card-demo";
-import ProductDetailPage from "@/components/ui/product/product-detail";
-import { notFound } from "next/navigation";
 
+import ProductDetailPage from "@/components/ui/product/product-detail";
+import { getProductBySlug, products } from "@/constants/data/product";
+import { notFound } from "next/navigation";
 
 export default function Page({ params }: { params: { slug: string } }) {
   const product = getProductBySlug(params.slug);
@@ -13,11 +13,11 @@ export default function Page({ params }: { params: { slug: string } }) {
   return <ProductDetailPage product={product} />;
 }
 
-// For static generation
+// Static paths
 export async function generateStaticParams() {
-  return products.map((product) => ({
-    slug: product.slug,
-  }));
+  return Array.isArray(products)
+    ? products.map((product) => ({ slug: product.slug }))
+    : [];
 }
 
-export const dynamicParams = false; // Only use the generated static params
+export const dynamicParams = false;
