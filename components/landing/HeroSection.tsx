@@ -3,64 +3,9 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { containerVariants,glowVariants,fadeInUp, itemVariants, buttonVariants } from "@/constants/variants";
 
 const Hero = () => {
-  // Animation variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.3,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: { duration: 0.7, ease: "easeOut" },
-    },
-  };
-
-  const buttonVariants = {
-    hidden: { scale: 0.9, opacity: 0 },
-    visible: {
-      scale: 1,
-      opacity: 1,
-      transition: { duration: 0.5 },
-    },
-    hover: {
-      scale: 1.05,
-      y: -5,
-      transition: { duration: 0.3 },
-    },
-    tap: {
-      scale: 0.95,
-      transition: { duration: 0.1 },
-    },
-  };
-
-  const fadeInUp = {
-    hidden: { y: 60, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: { duration: 0.6, ease: "easeOut" },
-    },
-  };
-
-  const glowVariants = {
-    initial: { opacity: 0.2 },
-    animate: {
-      opacity: [0.2, 0.3, 0.2],
-      transition: { duration: 8, repeat: Infinity, ease: "easeInOut" },
-    },
-  };
-
   return (
     <motion.section
       className="relative  w-full h-screen overflow-hidden"

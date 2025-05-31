@@ -1,21 +1,20 @@
 "use client";
 import * as React from "react";
 import { cn } from "@/lib/utils";
-import ImageBlur from "../../common/ImageBlur";
-import { ChevronDown, ChevronUp, ArrowLeft, Star } from "lucide-react";
-import { Product } from "@/types/product";
 import Link from "next/link";
+import ImageBlur from "../../../common/ImageBlur";
+import { ChevronDown, ChevronUp, ArrowLeft, Star } from "lucide-react";
+import { ProductDetailPageProps } from "@/types/product";
 
-interface ProductDetailPageProps {
-  product: Product;
-}
 
 const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ product }) => {
   const [quantity, setQuantity] = React.useState(1);
   const [selectedVariantIndex, setSelectedVariantIndex] = React.useState(0);
   const [selectedImageIndex, setSelectedImageIndex] = React.useState(0);
   const [thumbnailStartIndex, setThumbnailStartIndex] = React.useState(0);
-  const [activeTab, setActiveTab] = React.useState<'description' | 'info' | 'reviews'>('description');
+  const [activeTab, setActiveTab] = React.useState<
+    "description" | "info" | "reviews"
+  >("description");
 
   const increaseQuantity = () => {
     if (product && selectedVariantIndex >= 0) {
@@ -34,18 +33,26 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ product }) => {
 
   const selectedVariant = product?.variants[selectedVariantIndex];
 
-  const formattedPrice = selectedVariant ? new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-  }).format(selectedVariant.price) : "";
+  const formattedPrice = selectedVariant
+    ? new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "USD",
+      }).format(selectedVariant.price)
+    : "";
 
-  const formattedComparedPrice = selectedVariant?.comparedAtPrice ? new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-  }).format(selectedVariant.comparedAtPrice) : null;
+  const formattedComparedPrice = selectedVariant?.comparedAtPrice
+    ? new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "USD",
+      }).format(selectedVariant.comparedAtPrice)
+    : null;
 
   const discount = selectedVariant?.comparedAtPrice
-    ? Math.round(((selectedVariant.comparedAtPrice - selectedVariant.price) / selectedVariant.comparedAtPrice) * 100)
+    ? Math.round(
+        ((selectedVariant.comparedAtPrice - selectedVariant.price) /
+          selectedVariant.comparedAtPrice) *
+          100
+      )
     : 0;
 
   const THUMBNAILS_TO_SHOW = 4;
@@ -73,22 +80,30 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ product }) => {
       <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center space-x-2 text-sm text-gray-500 dark:text-gray-400">
-            <Link href="/" className="hover:text-gray-700 dark:hover:text-gray-200">
+            <Link
+              href="/"
+              className="hover:text-gray-700 dark:hover:text-gray-200"
+            >
               Home
             </Link>
             <span>/</span>
-            <Link href="/products" className="hover:text-gray-700 dark:hover:text-gray-200">
+            <Link
+              href="/products"
+              className="hover:text-gray-700 dark:hover:text-gray-200"
+            >
               Products
             </Link>
             <span>/</span>
-            <Link 
-              href={`/category/${product.categories[0]}`} 
+            <Link
+              href={`/category/${product.categories[0]}`}
               className="hover:text-gray-700 dark:hover:text-gray-200 capitalize"
             >
               {product.categories[0]}
             </Link>
             <span>/</span>
-            <span className="text-gray-900 dark:text-white font-medium">{product.name}</span>
+            <span className="text-gray-900 dark:text-white font-medium">
+              {product.name}
+            </span>
           </div>
         </div>
       </div>
@@ -118,9 +133,9 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ product }) => {
                       onClick={scrollThumbnailsUp}
                       disabled={thumbnailStartIndex === 0}
                       className={`mb-1 rounded-full p-1 ${
-                        thumbnailStartIndex === 0 
-                          ? 'text-gray-300' 
-                          : 'text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700'
+                        thumbnailStartIndex === 0
+                          ? "text-gray-300"
+                          : "text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700"
                       }`}
                     >
                       <ChevronUp size={20} />
@@ -128,7 +143,10 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ product }) => {
 
                     <div className="flex flex-col space-y-2">
                       {product.images
-                        .slice(thumbnailStartIndex, thumbnailStartIndex + THUMBNAILS_TO_SHOW)
+                        .slice(
+                          thumbnailStartIndex,
+                          thumbnailStartIndex + THUMBNAILS_TO_SHOW
+                        )
                         .map((image, index) => {
                           const actualIndex = thumbnailStartIndex + index;
                           return (
@@ -155,11 +173,15 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ product }) => {
 
                     <button
                       onClick={scrollThumbnailsDown}
-                      disabled={thumbnailStartIndex + THUMBNAILS_TO_SHOW >= product.images.length}
+                      disabled={
+                        thumbnailStartIndex + THUMBNAILS_TO_SHOW >=
+                        product.images.length
+                      }
                       className={`mt-1 rounded-full p-1 ${
-                        thumbnailStartIndex + THUMBNAILS_TO_SHOW >= product.images.length 
-                          ? 'text-gray-300' 
-                          : 'text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700'
+                        thumbnailStartIndex + THUMBNAILS_TO_SHOW >=
+                        product.images.length
+                          ? "text-gray-300"
+                          : "text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700"
                       }`}
                     >
                       <ChevronDown size={20} />
@@ -170,13 +192,18 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ product }) => {
                 {/* Main image */}
                 <div className="relative aspect-square flex-1 overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700">
                   <ImageBlur
-                    src={product.images[selectedImageIndex]?.url || "/images/Image.png"}
-                    alt={product.images[selectedImageIndex]?.alt || product.name}
+                    src={
+                      product.images[selectedImageIndex]?.url ||
+                      "/images/Image.png"
+                    }
+                    alt={
+                      product.images[selectedImageIndex]?.alt || product.name
+                    }
                     width={600}
                     height={600}
                     className="h-full w-full object-cover"
                   />
-                  
+
                   {discount > 0 && (
                     <div className="absolute top-4 left-4 bg-red-500 text-white px-3 py-1 rounded-md text-sm font-medium">
                       {discount}% OFF
@@ -202,26 +229,36 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ product }) => {
                             <Star
                               key={i}
                               size={16}
-                              className={i < Math.floor(product.averageRating) ? "fill-current" : ""}
+                              className={
+                                i < Math.floor(product.averageRating)
+                                  ? "fill-current"
+                                  : ""
+                              }
                             />
                           ))}
                         </div>
                         <span className="ml-2 text-sm text-gray-500 dark:text-gray-400">
-                          ({product.reviewCount} {product.reviewCount === 1 ? "review" : "reviews"})
+                          ({product.reviewCount}{" "}
+                          {product.reviewCount === 1 ? "review" : "reviews"})
                         </span>
                       </div>
                       <div className="text-sm text-gray-500 dark:text-gray-400">
-                        SKU: <span className="text-gray-900 dark:text-white">{selectedVariant?.sku}</span>
+                        SKU:{" "}
+                        <span className="text-gray-900 dark:text-white">
+                          {selectedVariant?.sku}
+                        </span>
                       </div>
                     </div>
                   </div>
-                  
-                  <span className={cn(
-                    "inline-block rounded-md px-3 py-1 text-sm font-medium",
-                    selectedVariant?.isAvailable
-                      ? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200"
-                      : "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200"
-                  )}>
+
+                  <span
+                    className={cn(
+                      "inline-block rounded-md px-3 py-1 text-sm font-medium",
+                      selectedVariant?.isAvailable
+                        ? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200"
+                        : "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200"
+                    )}
+                  >
                     {selectedVariant?.isAvailable ? "In Stock" : "Out of Stock"}
                   </span>
                 </div>
@@ -273,10 +310,12 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ product }) => {
                             selectedVariantIndex === index
                               ? "border-green-500 bg-green-50 text-green-700 dark:bg-green-900 dark:text-green-200"
                               : "border-gray-300 bg-white text-gray-700 hover:border-gray-400 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:hover:border-gray-500",
-                            !variant.isAvailable && "cursor-not-allowed opacity-50"
+                            !variant.isAvailable &&
+                              "cursor-not-allowed opacity-50"
                           )}
                         >
-                          {variant.name} - {variant.weight}{variant.weightUnit}
+                          {variant.name} - {variant.weight}
+                          {variant.weightUnit}
                         </button>
                       ))}
                     </div>
@@ -294,10 +333,15 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ product }) => {
                       >
                         -
                       </button>
-                      <span className="w-12 text-center font-medium">{quantity}</span>
+                      <span className="w-12 text-center font-medium">
+                        {quantity}
+                      </span>
                       <button
                         onClick={increaseQuantity}
-                        disabled={!selectedVariant?.isAvailable || quantity >= (selectedVariant?.stock || 0)}
+                        disabled={
+                          !selectedVariant?.isAvailable ||
+                          quantity >= (selectedVariant?.stock || 0)
+                        }
                         className="flex h-10 w-10 items-center justify-center text-gray-600 transition-colors hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800 disabled:opacity-50"
                       >
                         +
@@ -338,9 +382,11 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ product }) => {
                 <div className="space-y-4 pt-6 border-t border-gray-200 dark:border-gray-700">
                   <div className="grid grid-cols-2 gap-4 text-sm">
                     <div>
-                      <span className="text-gray-500 dark:text-gray-400">Categories:</span>
+                      <span className="text-gray-500 dark:text-gray-400">
+                        Categories:
+                      </span>
                       <div className="mt-1">
-                        {product.categories.map(category => (
+                        {product.categories.map((category) => (
                           <Link
                             key={category}
                             href={`/category/${category}`}
@@ -351,12 +397,14 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ product }) => {
                         ))}
                       </div>
                     </div>
-                    
+
                     {product.tags && product.tags.length > 0 && (
                       <div>
-                        <span className="text-gray-500 dark:text-gray-400">Tags:</span>
+                        <span className="text-gray-500 dark:text-gray-400">
+                          Tags:
+                        </span>
                         <div className="mt-1 flex flex-wrap gap-1">
-                          {product.tags.map(tag => (
+                          {product.tags.map((tag) => (
                             <span
                               key={tag}
                               className="inline-block rounded-full bg-emerald-100 px-2 py-1 text-xs font-medium text-emerald-800 dark:bg-emerald-900 dark:text-emerald-200"
@@ -371,26 +419,42 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ product }) => {
 
                   {/* Share */}
                   <div>
-                    <span className="text-gray-500 dark:text-gray-400 text-sm">Share:</span>
+                    <span className="text-gray-500 dark:text-gray-400 text-sm">
+                      Share:
+                    </span>
                     <div className="flex gap-3 mt-2">
                       <a
-                        href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(`${window.location.origin}/products/${product.slug}`)}`}
+                        href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+                          `${window.location.origin}/products/${product.slug}`
+                        )}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400"
                       >
-                        <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                        <svg
+                          className="h-5 w-5"
+                          fill="currentColor"
+                          viewBox="0 0 24 24"
+                        >
                           <path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z" />
                         </svg>
                       </a>
-                      
+
                       <a
-                        href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(`${window.location.origin}/products/${product.slug}`)}&text=Check%20out%20this%20product:%20${encodeURIComponent(product.name)}`}
+                        href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(
+                          `${window.location.origin}/products/${product.slug}`
+                        )}&text=Check%20out%20this%20product:%20${encodeURIComponent(
+                          product.name
+                        )}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-gray-500 hover:text-blue-400 dark:text-gray-400 dark:hover:text-blue-300"
                       >
-                        <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                        <svg
+                          className="h-5 w-5"
+                          fill="currentColor"
+                          viewBox="0 0 24 24"
+                        >
                           <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z" />
                         </svg>
                       </a>
@@ -405,10 +469,10 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ product }) => {
           <div className="border-t border-gray-200 dark:border-gray-700">
             <div className="flex border-b border-gray-200 dark:border-gray-700">
               {[
-                { key: 'description', label: 'Description' },
-                { key: 'info', label: 'Additional Info' },
-                { key: 'reviews', label: `Reviews (${product.reviewCount})` }
-              ].map(tab => (
+                { key: "description", label: "Description" },
+                { key: "info", label: "Additional Info" },
+                { key: "reviews", label: `Reviews (${product.reviewCount})` },
+              ].map((tab) => (
                 <button
                   key={tab.key}
                   onClick={() => setActiveTab(tab.key as typeof activeTab)}
@@ -425,50 +489,57 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ product }) => {
             </div>
 
             <div className="p-6">
-              {activeTab === 'description' && (
+              {activeTab === "description" && (
                 <div className="prose max-w-none dark:prose-invert">
                   <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
                     {product.description}
                   </p>
-                  
-                  {product.certifications && product.certifications.length > 0 && (
-                    <div className="mt-6">
-                      <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
-                        Certifications
-                      </h4>
-                      <div className="flex flex-wrap gap-2">
-                        {product.certifications.map(cert => (
-                          <span
-                            key={cert}
-                            className="inline-block rounded-lg bg-green-100 px-3 py-1 text-sm font-medium text-green-800 dark:bg-green-900 dark:text-green-200"
-                          >
-                            {cert}
-                          </span>
-                        ))}
+
+                  {product.certifications &&
+                    product.certifications.length > 0 && (
+                      <div className="mt-6">
+                        <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+                          Certifications
+                        </h4>
+                        <div className="flex flex-wrap gap-2">
+                          {product.certifications.map((cert) => (
+                            <span
+                              key={cert}
+                              className="inline-block rounded-lg bg-green-100 px-3 py-1 text-sm font-medium text-green-800 dark:bg-green-900 dark:text-green-200"
+                            >
+                              {cert}
+                            </span>
+                          ))}
+                        </div>
                       </div>
-                    </div>
-                  )}
+                    )}
                 </div>
               )}
 
-              {activeTab === 'info' && (
+              {activeTab === "info" && (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-4">
                     <div>
-                      <span className="font-medium text-gray-900 dark:text-white">Weight:</span>
+                      <span className="font-medium text-gray-900 dark:text-white">
+                        Weight:
+                      </span>
                       <span className="ml-2 text-gray-700 dark:text-gray-300">
                         {selectedVariant?.weight} {selectedVariant?.weightUnit}
                       </span>
                     </div>
                     <div>
-                      <span className="font-medium text-gray-900 dark:text-white">Stock:</span>
+                      <span className="font-medium text-gray-900 dark:text-white">
+                        Stock:
+                      </span>
                       <span className="ml-2 text-gray-700 dark:text-gray-300">
                         {selectedVariant?.stock} units available
                       </span>
                     </div>
                     {product.harvestDate && (
                       <div>
-                        <span className="font-medium text-gray-900 dark:text-white">Harvest Date:</span>
+                        <span className="font-medium text-gray-900 dark:text-white">
+                          Harvest Date:
+                        </span>
                         <span className="ml-2 text-gray-700 dark:text-gray-300">
                           {product.harvestDate.toLocaleDateString()}
                         </span>
@@ -476,32 +547,38 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ product }) => {
                     )}
                     {product.bestBefore && (
                       <div>
-                        <span className="font-medium text-gray-900 dark:text-white">Best Before:</span>
+                        <span className="font-medium text-gray-900 dark:text-white">
+                          Best Before:
+                        </span>
                         <span className="ml-2 text-gray-700 dark:text-gray-300">
                           {product.bestBefore.toLocaleDateString()}
                         </span>
                       </div>
                     )}
                   </div>
-                  
+
                   <div className="space-y-4">
                     <div>
-                      <span className="font-medium text-gray-900 dark:text-white">Organic:</span>
+                      <span className="font-medium text-gray-900 dark:text-white">
+                        Organic:
+                      </span>
                       <span className="ml-2 text-gray-700 dark:text-gray-300">
-                        {product.isOrganic ? 'Yes' : 'No'}
+                        {product.isOrganic ? "Yes" : "No"}
                       </span>
                     </div>
                     <div>
-                      <span className="font-medium text-gray-900 dark:text-white">Categories:</span>
+                      <span className="font-medium text-gray-900 dark:text-white">
+                        Categories:
+                      </span>
                       <span className="ml-2 text-gray-700 dark:text-gray-300 capitalize">
-                        {product.categories.join(', ')}
+                        {product.categories.join(", ")}
                       </span>
                     </div>
                   </div>
                 </div>
               )}
 
-              {activeTab === 'reviews' && (
+              {activeTab === "reviews" && (
                 <div className="text-center py-12">
                   <div className="flex items-center justify-center mb-4">
                     <div className="flex text-amber-400 text-2xl">
@@ -509,7 +586,11 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ product }) => {
                         <Star
                           key={i}
                           size={24}
-                          className={i < Math.floor(product.averageRating) ? "fill-current" : ""}
+                          className={
+                            i < Math.floor(product.averageRating)
+                              ? "fill-current"
+                              : ""
+                          }
                         />
                       ))}
                     </div>
@@ -518,7 +599,8 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ product }) => {
                     {product.averageRating.toFixed(1)} out of 5
                   </p>
                   <p className="text-gray-500 dark:text-gray-400 mb-8">
-                    Based on {product.reviewCount} {product.reviewCount === 1 ? 'review' : 'reviews'}
+                    Based on {product.reviewCount}{" "}
+                    {product.reviewCount === 1 ? "review" : "reviews"}
                   </p>
                   <p className="text-gray-500 dark:text-gray-400">
                     No reviews yet. Be the first to review this product!

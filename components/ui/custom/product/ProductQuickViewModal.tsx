@@ -1,22 +1,17 @@
 "use client";
 import * as React from "react";
 import { cn } from "@/lib/utils";
-import ImageBlur from "../../common/ImageBlur";
+import ImageBlur from "@/components/common/ImageBlur";
 import { ChevronDown, ChevronUp, X } from "lucide-react";
-import { Product } from "@/types/product";
-import { Separator } from "../separator";
+import { Separator } from "../../separator";
+import { ProductQuickViewModalProps } from "@/types/product";
 
-
-interface ProductQuickViewModalProps {
-  product: Product | null;
-  isOpen: boolean;
-  onClose: () => void;
-}
 
 const ProductQuickViewModal: React.FC<ProductQuickViewModalProps> = ({
   product,
   isOpen,
   onClose,
+  handleAddToCart
 }) => {
   const [quantity, setQuantity] = React.useState(1);
   const [selectedVariantIndex, setSelectedVariantIndex] = React.useState(0);
@@ -372,7 +367,7 @@ const ProductQuickViewModal: React.FC<ProductQuickViewModalProps> = ({
                 </div>
 
                 <button
-                  onClick={() => { console.log(`Added ${quantity} ${product.name} to cart`); }}
+                  onClick={() => handleAddToCart(quantity)}
                   disabled={!selectedVariant?.isAvailable}
                   className={cn(
                     "flex flex-1 items-center justify-center gap-2 rounded-full py-3 text-sm font-medium text-white transition-colors",
@@ -425,10 +420,6 @@ const ProductQuickViewModal: React.FC<ProductQuickViewModalProps> = ({
 
                     </div>
                   )}
-
-
-
-
                 </div>
               </div>
             </div>

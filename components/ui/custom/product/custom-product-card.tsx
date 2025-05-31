@@ -1,9 +1,10 @@
 "use client";
-import * as React from "react";
+import { useEffect, useState, useMemo, forwardRef } from "react";
 import { cn } from "@/lib/utils";
-import { ProductCardProps } from "@/types/custom-card";
-import ImageBlur from "../../common/ImageBlur";
+import { EnhancedProductCardProps } from "@/types/product";
+import ImageBlur from "../../../common/ImageBlur";
 import ProductQuickViewModal from "./ProductQuickViewModal";
+<<<<<<< HEAD:components/ui/product/custom-product-card.tsx
 import { Product } from "@/types/product";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -12,6 +13,10 @@ import Link from "next/link";
 interface EnhancedProductCardProps extends ProductCardProps {
   product?: Product; // This would be your Product type from the types defined
 }
+=======
+import { Product, CartItem } from "@/types/product";
+import CountDownShift from "@/components/ui/custom/timer/CountDownItem";
+>>>>>>> 2541366cb78a6a24fefbbdcc16d5508a6fdf657e:components/ui/custom/product/custom-product-card.tsx
 
 /**
  * `ProductCard` is a reusable React component that displays a product card with details such as
@@ -19,7 +24,7 @@ interface EnhancedProductCardProps extends ProductCardProps {
  * quick view modal functionality.
  */
 
-const ProductCard = React.forwardRef<HTMLDivElement, EnhancedProductCardProps>(
+const ProductCard = forwardRef<HTMLDivElement, EnhancedProductCardProps>(
   (
     {
       className,
@@ -35,6 +40,7 @@ const ProductCard = React.forwardRef<HTMLDivElement, EnhancedProductCardProps>(
     },
     ref
   ) => {
+<<<<<<< HEAD:components/ui/product/custom-product-card.tsx
     const [isInCart, setIsInCart] = React.useState(false);
     const router = useRouter(); // Initialize the router
     const [isModalOpen, setIsModalOpen] = React.useState(false);
@@ -43,6 +49,54 @@ const ProductCard = React.forwardRef<HTMLDivElement, EnhancedProductCardProps>(
     const handleAddToCart = () => {
       setIsInCart((prev) => !prev);
       console.log(`${name} ${!isInCart ? "added to" : "removed from"} cart`);
+=======
+    const [isInCart, setIsInCart] = useState(false);
+    const [showAddedNotification, setShowAddedNotification] =
+      useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const handleAddToCart = (quantity: number = 1) => {
+      const cartItem = {
+        id: (product && product.id) || Date.now().toString(),
+        name,
+        price,
+        discountedPrice: price * (1 - (discount || 0) / 100),
+        quantity: quantity,
+        imageUrl,
+        category:
+          (product && product.categories && product.categories[0]) ||
+          "Uncategorized",
+        farmer: (product && product.farmerId) || "Unknown",
+      };
+
+      const existingCart =
+        typeof window !== "undefined"
+          ? JSON.parse(localStorage.getItem("cart") || "[]")
+          : [];
+
+      const existingItemIndex = existingCart.findIndex(
+        (item: { id: string }) => item.id === cartItem.id
+      );
+
+      if (existingItemIndex >= 0) {
+        existingCart[existingItemIndex].quantity += quantity;
+      } else {
+        existingCart.push(cartItem);
+      }
+
+      if (typeof window !== "undefined") {
+        localStorage.setItem("cart", JSON.stringify(existingCart));
+      }
+
+      setIsInCart(true);
+      setShowAddedNotification(true);
+      // Hide notification after 3 seconds
+      setTimeout(() => {
+        setShowAddedNotification(false);
+      }, 3000);
+
+      console.log(`${name} added to cart`);
+>>>>>>> 2541366cb78a6a24fefbbdcc16d5508a6fdf657e:components/ui/custom/product/custom-product-card.tsx
     };
 
     const handleOpenModal = (e: React.MouseEvent) => {
@@ -54,6 +108,16 @@ const ProductCard = React.forwardRef<HTMLDivElement, EnhancedProductCardProps>(
     const handleCloseModal = () => {
       setIsModalOpen(false);
     };
+
+    useEffect(() => {
+      if (typeof window !== "undefined") {
+        const existingCart = JSON.parse(localStorage.getItem("cart") || "[]");
+        const isProductInCart = existingCart.some(
+          (item: CartItem) => item.name === name
+        );
+        setIsInCart(isProductInCart);
+      }
+    }, [name]);
 
     const formattedPrice = new Intl.NumberFormat("en-US", {
       style: "currency",
@@ -67,15 +131,19 @@ const ProductCard = React.forwardRef<HTMLDivElement, EnhancedProductCardProps>(
         }).format(price * (1 - discount / 100))
       : null;
 
+<<<<<<< HEAD:components/ui/product/custom-product-card.tsx
  const handleNameClick = (e: React.MouseEvent) => {
       e.preventDefault();
       router.push(`/products/${displayProduct.slug}`);
     };
 
+=======
+>>>>>>> 2541366cb78a6a24fefbbdcc16d5508a6fdf657e:components/ui/custom/product/custom-product-card.tsx
     // Create a mock product object if not provided
-    const displayProduct = React.useMemo((): Product => {
-  if (product) return product;
+    const displayProduct = useMemo((): Product => {
+      if (product) return product;
 
+<<<<<<< HEAD:components/ui/product/custom-product-card.tsx
   
 
   return {
@@ -117,13 +185,75 @@ const ProductCard = React.forwardRef<HTMLDivElement, EnhancedProductCardProps>(
     featured: false,
   };
 }, [product, name, price, rating, imageUrl, imageAlt, discount]);
+=======
+      return {
+        id: "mock-id",
+        name: name,
+        slug: "mock-slug",
+        shortDescription:
+          "Quick view of this product showing key details and features.",
+        description:
+          "This is a detailed description of the product that would include more information about features, benefits, and usage.",
+        images: [
+          {
+            id: "primary-image",
+            url: imageUrl || "/images/Image.png",
+            alt: imageAlt || `${name} image`,
+            isPrimary: true,
+          },
+        ],
+        variants: [
+          {
+            id: "default-variant",
+            name: "Default",
+            price: price,
+            comparedAtPrice: discount
+              ? price / (1 - discount / 100)
+              : undefined,
+            sku: "SKU-12345",
+            weight: 1,
+            weightUnit: "kg",
+            stock: 25,
+            isAvailable: true,
+          },
+        ],
+        categories: ["vegetables"],
+        certifications: ["Organic", "Non-GMO"],
+        isOrganic: true,
+        averageRating: rating || 0,
+        reviewCount: 4,
+        status: "active",
+        farmerId: "mock-farmer-id",
+        createdAt: new Date("2025-05-15"),
+        updatedAt: new Date("2025-05-15"),
+        featured: false,
+      };
+    }, [product, name, price, rating, imageUrl, imageAlt, discount]);
+>>>>>>> 2541366cb78a6a24fefbbdcc16d5508a6fdf657e:components/ui/custom/product/custom-product-card.tsx
 
     return (
       <>
+        {showAddedNotification && (
+          <div className="fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded-md shadow-lg z-[100000] flex items-center gap-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fillRule="evenodd"
+                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                clipRule="evenodd"
+              />
+            </svg>
+            <span>{name} added to cart!</span>
+          </div>
+        )}
         <div
           ref={ref}
           className={cn(
-            "group relative overflow-hidden border bg-white shadow-sm transition-all hover:shadow-md dark:border-gray-800 dark:bg-gray-950",
+            "group relative overflow-hidden border bg-white flex flex-col justify-between shadow-sm transition-all hover:shadow-md dark:border-gray-800 dark:bg-gray-950",
             isInCart
               ? "border-[#2C742F] shadow-[0_0_10px_rgba(34,197,94,0.5)]"
               : "border-gray-200",
@@ -133,7 +263,7 @@ const ProductCard = React.forwardRef<HTMLDivElement, EnhancedProductCardProps>(
         >
           {/* Discount tag */}
           {discount && (
-            <div className="absolute left-4 top-4 z-10 flex gap-3">
+            <div className="absolute  sm:left-4 sm:top-4 z-10 flex gap-3">
               <div className="rounded-sm discount-tag-bg py-1 px-2 text-sm ">
                 Sale {discount}%
               </div>
@@ -206,7 +336,7 @@ const ProductCard = React.forwardRef<HTMLDivElement, EnhancedProductCardProps>(
                 />
               </button>
               <button
-                onClick={handleAddToCart}
+                onClick={() => handleAddToCart()}
                 aria-label={`Add ${name} to cart`}
                 className={cn(
                   "flex h-10 w-1/2 space-x-5 items-center text-sm cursor-pointer justify-center rounded-full transition-colors",
@@ -250,9 +380,17 @@ const ProductCard = React.forwardRef<HTMLDivElement, EnhancedProductCardProps>(
                   : "justify-between flex items-center"
               )}
             >
-              <div className={cn(isHotDeal ? "space-y-1" : "")}>
+              <div
+                className={cn(
+                  isHotDeal
+                    ? "space-y-1 w-full flex-col items-center justify-center"
+                    : ""
+                )}
+              >
                 <h3
-                  className={`line-clamp-1 text-sm font-medium ${
+                  className={`line-clamp-1 font-medium ${
+                    isHotDeal ? "text-center text-2xl" : " text-sm"
+                  } ${
                     !isInCart ? "text-gray-900" : "isInCart-name-color"
                   }  dark:text-gray-50`}
                 >
@@ -268,7 +406,13 @@ const ProductCard = React.forwardRef<HTMLDivElement, EnhancedProductCardProps>(
                 </h3>
                 <div>
                   {discountedPrice ? (
-                    <div className="flex items-center gap-2">
+                    <div
+                      className={`flex  ${
+                        !isHotDeal
+                          ? "flex-col sm:flex-row sm:items-center sm:space-x-2"
+                          : "items-center justify-center space-x-2"
+                      }`}
+                    >
                       <span className="font-bold">{discountedPrice}</span>
                       <span className="text-gray-500 line-through dark:text-gray-400">
                         {formattedPrice}
@@ -281,8 +425,10 @@ const ProductCard = React.forwardRef<HTMLDivElement, EnhancedProductCardProps>(
                   )}
                 </div>
                 <div
-                  className={`flex items-center gap-1 ${
-                    isHotDeal ? "-ml-3" : ""
+                  className={`flex  gap-1 ${
+                    isHotDeal
+                      ? "-ml-3 items-center justify-center"
+                      : "flex-col sm:flex-row sm:items-center"
                   }`}
                 >
                   <span className="text-md text-orange-400">
@@ -290,15 +436,21 @@ const ProductCard = React.forwardRef<HTMLDivElement, EnhancedProductCardProps>(
                       <span key={i}>{i < Math.floor(rating) ? "★" : "☆"}</span>
                     ))}
                   </span>
-                  <span className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                  <span
+                    className={`text-xs text-gray-500 dark:text-gray-400 ${
+                      isHotDeal ? "mt-1" : ""
+                    }`}
+                  >
                     ({rating.toFixed(1)} {isHotDeal ? "Feedback" : ""})
                   </span>
                 </div>
               </div>
-           
+              {/* Add to cart button for non-hot deal products 
+             This button is only shown when the product is not a hot deal
+            */}
               {!isHotDeal && (
                 <button
-                  onClick={handleAddToCart}
+                  onClick={()=> handleAddToCart()}
                   aria-label={`Add ${name} to cart`}
                   className={cn(
                     "flex h-10 w-10 items-center cursor-pointer justify-center rounded-full transition-colors",
@@ -315,16 +467,30 @@ const ProductCard = React.forwardRef<HTMLDivElement, EnhancedProductCardProps>(
                   />
                 </button>
               )}
-              
+              {isHotDeal ? (
+                <div className="pb-4 ">
+                  <p className="text-center mt-4 text-gray-500 dark:text-gray-400">
+                    Hurry up! Offer ends In:
+                  </p>
+                  <div className="">
+                    <CountDownShift />
+                  </div>
+                </div>
+              ) : (
+                isHotDeal && (
+                  <p className="text-red-500 font-bold">Deal has expired</p>
+                )
+              )}
             </div>
           </div>
         </div>
 
         {/* Quick View Modal */}
-        <ProductQuickViewModal 
-          product={displayProduct} 
-          isOpen={isModalOpen} 
-          onClose={handleCloseModal} 
+        <ProductQuickViewModal
+          product={displayProduct}
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+          handleAddToCart={handleAddToCart}
         />
       </>
     );
