@@ -1,8 +1,9 @@
 import React from "react";
 import ProductCard from "../ui/custom/product/custom-product-card";
-import PRODUCTS from "@/constants/mock-data";
+import products from "@/constants/mock-data";
 import ImageBlur from "../common/ImageBlur";
 import Link from "next/link";
+import { getDiscount } from "@/lib/product-utils/price";
 
 const FeaturedDeals: React.FC = () => {
   return (
@@ -27,23 +28,14 @@ const FeaturedDeals: React.FC = () => {
       </h2>
       <div className="flex flex-col">
         <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 mt-6">
-          {PRODUCTS.map((product) => (
+          {products.map((product) => (
             <ProductCard
               key={product.id}
               imageUrl={product.images[0]?.url || "/images/Image.png"}
               name={product.name}
               price={product.variants[0]?.price || 0}
               rating={product.averageRating}
-              discount={
-                product.variants[0]?.comparedAtPrice
-                  ? Math.round(
-                      ((product.variants[0].comparedAtPrice -
-                        product.variants[0].price) /
-                        product.variants[0].comparedAtPrice) *
-                        100
-                    )
-                  : 0
-              }
+              discount={getDiscount(product)}
               imageAlt={product.images[0]?.alt || ""}
               product={product}
             />

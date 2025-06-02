@@ -2,25 +2,18 @@
 import * as React from "react";
 import ImageBlur from "@/components/common/ImageBlur";
 import Link from "next/link";
-
-interface CartItem {
-  id: string;
-  name: string;
-  price: number;
-  discountedPrice: number;
-  quantity: number;
-  imageUrl: string;
-  category?: string;
-  farmer?: string;
-}
+import { CartItem } from "@/types/product";
+import { useRouter } from "next/navigation";
 
 const ShoppingCartPage = () => {
   const [cartItems, setCartItems] = React.useState<CartItem[]>([]);
   const [loading, setLoading] = React.useState(true);
+  const [confirmDeleteId, setConfirmDeleteId] = React.useState<string | null>(null);
+  const router = useRouter();
 
   // Calculate totals
   const subtotal = cartItems.reduce(
-    (sum, item) => sum + item.discountedPrice * item.quantity,
+    (sum, item) => sum + (item.discountedPrice || item.price) * item.quantity,
     0
   );
   const taxRate = 0.1; // 10% tax
@@ -36,22 +29,38 @@ const ShoppingCartPage = () => {
   }, []);
 
   // Update quantity
-  const updateQuantity = (id: string, newQuantity: number) => {
+  const updateQuantity = (variantId: string, newQuantity: number) => {
     if (newQuantity < 1) return;
 
     const updatedCart = cartItems.map((item) =>
-      item.id === id ? { ...item, quantity: newQuantity } : item
+      item.variantId === variantId ? { ...item, quantity: newQuantity } : item
     );
 
     setCartItems(updatedCart);
     localStorage.setItem("cart", JSON.stringify(updatedCart));
   };
 
+  // Show delete confirmation
+  const showDeleteConfirmation = (variantId: string) => {
+    setConfirmDeleteId(variantId);
+  };
+
+  // Cancel delete
+  const cancelDelete = () => {
+    setConfirmDeleteId(null);
+  };
+
   // Remove item
-  const removeItem = (id: string) => {
-    const updatedCart = cartItems.filter((item) => item.id !== id);
+  const removeItem = (variantId: string) => {
+    const updatedCart = cartItems.filter((item) => item.variantId !== variantId);
     setCartItems(updatedCart);
     localStorage.setItem("cart", JSON.stringify(updatedCart));
+    setConfirmDeleteId(null);
+  };
+
+  // Navigate to product detail
+  const goToProductDetail = (slug: string) => {
+    router.push(`/products/${slug}`);
   };
 
   if (loading) {
@@ -114,80 +123,112 @@ const ShoppingCartPage = () => {
               <div className="col-span-2 text-right">Total</div>
             </div>
 
-            {cartItems.map((item) => (
-              <div
-                key={item.id}
-                className="grid grid-cols-12 p-4 border-b border-gray-200 dark:border-gray-700 items-center"
-              >
-                <div className="col-span-5 flex items-center gap-4">
-                  <button
-                    onClick={() => removeItem(item.id)}
-                    className="text-gray-500 hover:text-red-500 transition-colors"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-5 w-5"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  </button>
-                  <ImageBlur
-                    src={item.imageUrl || "/images/Image.png"}
-                    alt={item.name}
-                    width={80}
-                    height={80}
-                    className="w-20 h-20 object-cover rounded"
-                  />
-                  <div>
-                    <h3 className="font-medium text-gray-900 dark:text-white">
-                      {item.name}
-                    </h3>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
-                      {item.category}
-                    </p>
+            {cartItems.map((item) => {
+              const currentPrice = item.discountedPrice || item.price;
+              const hasDiscount = item.discountedPrice && item.discountedPrice < item.price;
+              
+              return (
+                <div
+                  key={`${item.productId}-${item.variantId}`}
+                  className="grid grid-cols-12 p-4 border-b border-gray-200 dark:border-gray-700 items-center"
+                >
+                  <div className="col-span-5 flex items-center gap-4">
+                    {confirmDeleteId === item.variantId ? (
+                      <div className="flex items-center gap-2">
+                        <button
+                          onClick={() => removeItem(item.variantId)}
+                          className="px-2 py-1 bg-red-500 text-white rounded text-sm hover:bg-red-600"
+                        >
+                          Confirm
+                        </button>
+                        <button
+                          onClick={cancelDelete}
+                          className="px-2 py-1 bg-gray-300 rounded text-sm hover:bg-gray-400"
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    ) : (
+                      <button
+                        onClick={() => showDeleteConfirmation(item.variantId)}
+                        className="text-gray-500 hover:text-red-500 transition-colors"
+                        title="Remove item"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-5 w-5"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
+                      </button>
+                    )}
+                    <ImageBlur
+                      src={item.imageUrl || "/images/Image.png"}
+                      alt={item.name}
+                      width={80}
+                      height={80}
+                      className="w-20 h-20 object-cover rounded cursor-pointer"
+                      onClick={() => goToProductDetail(item.slug)}
+                    />
+                    <div>
+                      <h3 
+                        className="font-medium text-gray-900 dark:text-white hover:text-green-600 cursor-pointer"
+                        onClick={() => goToProductDetail(item.slug)}
+                      >
+                        {item.name}
+                      </h3>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">
+                        {item.category}
+                      </p>
+                      {item.weight && (
+                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                          {item.weight} {item.weightUnit}
+                        </p>
+                      )}
+                    </div>
                   </div>
-                </div>
 
-                <div className="col-span-2 text-center">
-                  <span className="font-medium text-gray-900 dark:text-white">
-                    ${item.discountedPrice.toFixed(2)}
-                  </span>
-                  {item.discountedPrice < item.price && (
-                    <span className="block text-sm text-gray-500 line-through">
-                      ${item.price.toFixed(2)}
+                  <div className="col-span-2 text-center">
+                    <span className="font-medium text-gray-900 dark:text-white">
+                      ${currentPrice.toFixed(2)}
                     </span>
-                  )}
-                </div>
+                    {hasDiscount && (
+                      <span className="block text-sm text-gray-500 line-through">
+                        ${item.price.toFixed(2)}
+                      </span>
+                    )}
+                  </div>
 
-                <div className="col-span-3 flex justify-center">
-                  <div className="flex items-center border border-gray-300 rounded-md">
-                    <button
-                      onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                      className="px-3 py-1 text-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700"
-                    >
-                      -
-                    </button>
-                    <span className="px-3 py-1">{item.quantity}</span>
-                    <button
-                      onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                      className="px-3 py-1 text-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700"
-                    >
-                      +
-                    </button>
+                  <div className="col-span-3 flex justify-center">
+                    <div className="flex items-center border border-gray-300 rounded-md">
+                      <button
+                        onClick={() => updateQuantity(item.variantId, item.quantity - 1)}
+                        className="px-3 py-1 text-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700"
+                      >
+                        -
+                      </button>
+                      <span className="px-3 py-1">{item.quantity}</span>
+                      <button
+                        onClick={() => updateQuantity(item.variantId, item.quantity + 1)}
+                        className="px-3 py-1 text-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700"
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="col-span-2 text-right font-medium text-gray-900 dark:text-white">
+                    ${(currentPrice * item.quantity).toFixed(2)}
                   </div>
                 </div>
-
-                <div className="col-span-2 text-right font-medium text-gray-900 dark:text-white">
-                  ${(item.discountedPrice * item.quantity).toFixed(2)}
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           <div className="mt-4 flex justify-end">

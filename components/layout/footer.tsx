@@ -82,7 +82,7 @@ const Footer = () => {
             <FooterSection title="Proxy">
               <FooterLink href="/about">About</FooterLink>
               <FooterLink href="/shop">Shop</FooterLink>
-              <FooterLink href="/product">Product</FooterLink>
+              <FooterLink href="/products">Product</FooterLink>
               <FooterLink href="/track-order">Track Order</FooterLink>
             </FooterSection>
 

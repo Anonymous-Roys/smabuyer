@@ -5,7 +5,7 @@ import PostCard from "@/components/ui/custom/post/posts-card";
 import ProductCard from "@/components/ui/custom/product/custom-product-card";
 import ImageBlur from "@/components/common/ImageBlur";
 import SearchComp from "@/components/ui/search-comp";
-import PRODUCTS from "@/constants/mock-data";
+import products from "@/constants/mock-data";
 
 const ProductsPage = () => {
   const posts = [
@@ -75,7 +75,7 @@ const ProductsPage = () => {
             ))}
           </header>
           <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-            {PRODUCTS.map((product) => (
+            {products.map((product) => (
               <ProductCard
                 key={product.id}
                 imageUrl={product.images[0]?.url || "/images/Image.png"}

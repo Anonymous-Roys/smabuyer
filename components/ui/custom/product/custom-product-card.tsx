@@ -1,22 +1,13 @@
 "use client";
 import { useEffect, useState, useMemo, forwardRef } from "react";
 import { cn } from "@/lib/utils";
-import { EnhancedProductCardProps } from "@/types/product";
+import { EnhancedProductCardProps, ProductVariant } from "@/types/product";
 import ImageBlur from "../../../common/ImageBlur";
 import ProductQuickViewModal from "./ProductQuickViewModal";
-<<<<<<< HEAD:components/ui/product/custom-product-card.tsx
-import { Product } from "@/types/product";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
-
-// Extended interface to include the product object
-interface EnhancedProductCardProps extends ProductCardProps {
-  product?: Product; // This would be your Product type from the types defined
-}
-=======
 import { Product, CartItem } from "@/types/product";
 import CountDownShift from "@/components/ui/custom/timer/CountDownItem";
->>>>>>> 2541366cb78a6a24fefbbdcc16d5508a6fdf657e:components/ui/custom/product/custom-product-card.tsx
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 /**
  * `ProductCard` is a reusable React component that displays a product card with details such as
@@ -40,64 +31,75 @@ const ProductCard = forwardRef<HTMLDivElement, EnhancedProductCardProps>(
     },
     ref
   ) => {
-<<<<<<< HEAD:components/ui/product/custom-product-card.tsx
-    const [isInCart, setIsInCart] = React.useState(false);
-    const router = useRouter(); // Initialize the router
-    const [isModalOpen, setIsModalOpen] = React.useState(false);
-  
-  
-    const handleAddToCart = () => {
-      setIsInCart((prev) => !prev);
-      console.log(`${name} ${!isInCart ? "added to" : "removed from"} cart`);
-=======
     const [isInCart, setIsInCart] = useState(false);
     const [showAddedNotification, setShowAddedNotification] =
       useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const handleAddToCart = (quantity: number = 1) => {
-      const cartItem = {
-        id: (product && product.id) || Date.now().toString(),
-        name,
-        price,
-        discountedPrice: price * (1 - (discount || 0) / 100),
-        quantity: quantity,
-        imageUrl,
-        category:
-          (product && product.categories && product.categories[0]) ||
-          "Uncategorized",
-        farmer: (product && product.farmerId) || "Unknown",
-      };
+    const handleAddToCart = (variant?: ProductVariant, quantity: number = 1) => {
+  // Use the first variant if none is provided
+  const selectedVariant = variant || displayProduct.variants[0];
+  
+  // Calculate discount percentage if there's a comparedAtPrice
+  const discountPercentage = selectedVariant.comparedAtPrice
+    ? Math.round(
+        ((selectedVariant.comparedAtPrice - selectedVariant.price) / 
+         selectedVariant.comparedAtPrice) * 100
+      )
+    : discount || 0;
 
-      const existingCart =
-        typeof window !== "undefined"
-          ? JSON.parse(localStorage.getItem("cart") || "[]")
-          : [];
+  const cartItem: CartItem = {
+    productId: displayProduct.id,
+    variantId: selectedVariant.id,
+    slug: displayProduct.slug,
+    name: `${displayProduct.name} - ${selectedVariant.name}`,
+    price: selectedVariant.price,
+    discountedPrice: selectedVariant.price * (1 - discountPercentage / 100),
+    quantity: quantity,
+    imageUrl: displayProduct.images.find(img => img.isPrimary)?.url || 
+             displayProduct.images[0]?.url || 
+             imageUrl || 
+             "/images/Image.png",
+    weight: selectedVariant.weight * quantity,
+    weightUnit: selectedVariant.weightUnit,
+    stock: selectedVariant.stock,
+    farmerId: displayProduct.farmerId,
+    category: displayProduct.categories[0] || "Uncategorized",
+    sku: selectedVariant.sku
+  };
 
-      const existingItemIndex = existingCart.findIndex(
-        (item: { id: string }) => item.id === cartItem.id
-      );
+  // Get existing cart from localStorage
+  const existingCart: CartItem[] = typeof window !== "undefined"
+    ? JSON.parse(localStorage.getItem("cart") || "[]")
+    : [];
 
-      if (existingItemIndex >= 0) {
-        existingCart[existingItemIndex].quantity += quantity;
-      } else {
-        existingCart.push(cartItem);
-      }
+  // Check if this exact variant already exists in cart
+  const existingItemIndex = existingCart.findIndex(
+    item => item.variantId === selectedVariant.id
+  );
 
-      if (typeof window !== "undefined") {
-        localStorage.setItem("cart", JSON.stringify(existingCart));
-      }
+  if (existingItemIndex >= 0) {
+    // Update existing item
+    existingCart[existingItemIndex].quantity += quantity;
+    existingCart[existingItemIndex].weight = 
+      selectedVariant.weight * existingCart[existingItemIndex].quantity;
+  } else {
+    // Add new item
+    existingCart.push(cartItem);
+  }
 
-      setIsInCart(true);
-      setShowAddedNotification(true);
-      // Hide notification after 3 seconds
-      setTimeout(() => {
-        setShowAddedNotification(false);
-      }, 3000);
+  // Save to localStorage
+  if (typeof window !== "undefined") {
+    localStorage.setItem("cart", JSON.stringify(existingCart));
+  }
 
-      console.log(`${name} added to cart`);
->>>>>>> 2541366cb78a6a24fefbbdcc16d5508a6fdf657e:components/ui/custom/product/custom-product-card.tsx
-    };
+  // UI feedback
+  setIsInCart(true);
+  setShowAddedNotification(true);
+  setTimeout(() => setShowAddedNotification(false), 3000);
+
+  console.log(`${displayProduct.name} added to cart`);
+};
 
     const handleOpenModal = (e: React.MouseEvent) => {
       e.preventDefault();
@@ -130,62 +132,17 @@ const ProductCard = forwardRef<HTMLDivElement, EnhancedProductCardProps>(
           currency: "USD",
         }).format(price * (1 - discount / 100))
       : null;
-
-<<<<<<< HEAD:components/ui/product/custom-product-card.tsx
+const router = useRouter()
  const handleNameClick = (e: React.MouseEvent) => {
       e.preventDefault();
       router.push(`/products/${displayProduct.slug}`);
     };
 
-=======
->>>>>>> 2541366cb78a6a24fefbbdcc16d5508a6fdf657e:components/ui/custom/product/custom-product-card.tsx
+
     // Create a mock product object if not provided
     const displayProduct = useMemo((): Product => {
       if (product) return product;
 
-<<<<<<< HEAD:components/ui/product/custom-product-card.tsx
-  
-
-  return {
-    id: "mock-id",
-    name: name,
-    slug: "mock-slug",
-    shortDescription: "Quick view of this product showing key details and features.",
-    description: "This is a detailed description of the product that would include more information about features, benefits, and usage.",
-    images: [
-      {
-        id: "primary-image",
-        url: imageUrl || "/images/Image.png",
-        alt: imageAlt || `${name} image`,
-        isPrimary: true,
-      },
-    ],
-    variants: [
-      {
-        id: "default-variant",
-        name: "Default",
-        price: price,
-        comparedAtPrice: discount ? price / (1 - discount / 100) : undefined,
-        sku: "SKU-12345",
-        weight: 1,
-        weightUnit: "kg",
-        stock: 25,
-        isAvailable: true,
-      },
-    ],
-    categories: ["vegetables"],
-    certifications: ["Organic", "Non-GMO"],
-    isOrganic: true,
-    averageRating: rating || 0,
-    reviewCount: 4,
-    status: "active",
-    farmerId: "mock-farmer-id",
-    createdAt: new Date("2025-05-15"),
-    updatedAt: new Date("2025-05-15"),
-    featured: false,
-  };
-}, [product, name, price, rating, imageUrl, imageAlt, discount]);
-=======
       return {
         id: "mock-id",
         name: name,
@@ -229,7 +186,6 @@ const ProductCard = forwardRef<HTMLDivElement, EnhancedProductCardProps>(
         featured: false,
       };
     }, [product, name, price, rating, imageUrl, imageAlt, discount]);
->>>>>>> 2541366cb78a6a24fefbbdcc16d5508a6fdf657e:components/ui/custom/product/custom-product-card.tsx
 
     return (
       <>
@@ -262,7 +218,7 @@ const ProductCard = forwardRef<HTMLDivElement, EnhancedProductCardProps>(
           {...props}
         >
           {/* Discount tag */}
-          {discount && (
+          {typeof discount === "number" && discount > 0 && (
             <div className="absolute  sm:left-4 sm:top-4 z-10 flex gap-3">
               <div className="rounded-sm discount-tag-bg py-1 px-2 text-sm ">
                 Sale {discount}%
@@ -490,7 +446,7 @@ const ProductCard = forwardRef<HTMLDivElement, EnhancedProductCardProps>(
           product={displayProduct}
           isOpen={isModalOpen}
           onClose={handleCloseModal}
-          handleAddToCart={handleAddToCart}
+           handleAddToCart={(quantity) => handleAddToCart(displayProduct.variants[0], quantity)}
         />
       </>
     );

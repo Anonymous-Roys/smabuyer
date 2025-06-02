@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
-import ProductCard from "./custom-product-card";
-import { products } from "@/constants/data/product";
+import ProductCard from "../custom/product/custom-product-card";
+import products from "@/constants/mock-data";
 
 
 

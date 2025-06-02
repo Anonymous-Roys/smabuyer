@@ -78,6 +78,7 @@ interface ProductCardProps {
 
 export interface ProductDetailPageProps {
   product: Product;
+  relatedProducts: Product[];
 }
 
 export interface ProductQuickViewModalProps {
@@ -107,14 +108,22 @@ type PaymentStatus =
   | "refunded"
   | "cancelled";
 
+
 export interface CartItem {
-  id: string;
-  name: string;
-  price: number;
-  quantity: number;
-  imageUrl: string;
-  category?: string;
-  farmer?: string;
+  productId: string;          // Original product ID
+  variantId: string;          // Selected variant ID
+  name: string;               // Product name + variant (e.g., "Organic Apples - 1kg")
+  price: number;  
+  slug: string;           
+  discountedPrice?: number;  
+  quantity: number;           
+  imageUrl: string;           
+  weight: number;             
+  weightUnit: "kg" | "g" | "lb" | "oz"; 
+  stock: number;             
+  farmerId?: string;           
+  category?: string;          
+  sku?: string;               
 };
 
 interface OrderItem {
