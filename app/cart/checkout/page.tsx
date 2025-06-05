@@ -72,7 +72,7 @@ const CheckoutPage = () => {
     // Clear cart after successful checkout
     localStorage.removeItem("cart");
     // Redirect to confirmation page
-    window.location.href = "/checkout/success";
+    window.location.href = "/cart/checkout/success";
   };
 
   return (

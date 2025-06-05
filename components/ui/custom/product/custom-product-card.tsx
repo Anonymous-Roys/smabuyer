@@ -381,10 +381,10 @@ const router = useRouter()
                   )}
                 </div>
                 <div
-                  className={`flex  gap-1 ${
+                  className={`flex gap-1 ${
                     isHotDeal
                       ? "-ml-3 items-center justify-center"
-                      : "flex-col sm:flex-row sm:items-center"
+                      : " flex-col sm:flex-row sm:items-center"
                   }`}
                 >
                   <span className="text-md text-orange-400">
@@ -394,7 +394,7 @@ const router = useRouter()
                   </span>
                   <span
                     className={`text-xs text-gray-500 dark:text-gray-400 ${
-                      isHotDeal ? "mt-1" : ""
+                      isHotDeal ? "mt-1" : "mt-1"
                     }`}
                   >
                     ({rating.toFixed(1)} {isHotDeal ? "Feedback" : ""})
