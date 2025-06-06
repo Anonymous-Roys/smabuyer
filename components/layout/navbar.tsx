@@ -53,7 +53,7 @@ const Navbar = () => {
     },
     {
       label: "Crowdfunding",
-      href: "crowd-funding",
+      href: "/crowdfunding",
     },
     {
       label: "Contact",

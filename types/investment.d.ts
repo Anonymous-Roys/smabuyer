@@ -6,7 +6,7 @@ type InvestmentStatus =
     | 'failed';
   
 
-    type InvestmentType = 'farm_expansion' | 'equipment' | 'logistics' | 'new_crop';
+  type InvestmentType = 'farm_expansion' | 'equipment' | 'logistics' | 'new_crop';
 
 interface InvestmentMilestone {
   id: string;
@@ -17,7 +17,7 @@ interface InvestmentMilestone {
   status: 'pending' | 'in_progress' | 'completed' | 'delayed';
 }
 
-interface InvestmentOpportunity {
+export interface InvestmentOpportunity {
   id: string;
   title: string;
   slug: string;
@@ -68,3 +68,10 @@ interface Investment {
   };
   notes?: string;
 }
+
+
+export type famerCampaignCardProps = {
+    opportunity: InvestmentOpportunity;
+    onDonate?: () => void;
+    farmerName?: string;
+};

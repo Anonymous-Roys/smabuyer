@@ -13,7 +13,7 @@ import Banner from "@/components/landing/Banner";
 
 const HomePage = () => {
   return (
-    <main className=" mx-auto">
+    <main className="mx-auto">
       <Hero />
       <BaseIcon />
       <Banner />

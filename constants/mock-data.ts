@@ -1,5 +1,7 @@
 // import { ProductCardProps } from "@/types/custom-card";
 import { Product } from "@/types/product";
+import { FundStatCardProps } from "@/types/fund-stat";
+import { famerCampaignCardProps } from "@/types/investment";
 
 
 
@@ -699,6 +701,257 @@ const products: Product[] = [
 
 export default products;
 
+
+export const FUND_STATS_MOCK: FundStatCardProps[] = [
+  {
+    logo: "/icons/total-fund.png",
+    statName: "Funds Growth",
+    directionImage: "/icons/arrow-up.svg",
+    isGrowth: true,
+    percentage: 12.5,
+    isPercentageRise: true,
+    totalFunds: "$12,000"
+  },
+  {
+    logo: "/icons/total-fund.png",
+    statName: "Weekly Funds",
+    directionImage: "/icons/arrow-down.svg",
+    isGrowth: false,
+    percentage: 3.2,
+    isPercentageRise: false,
+    totalFunds: "1,200"
+  },
+  {
+    logo: "/icons/total-fund.png",
+    statName: "Funds Raised",
+    directionImage: "/icons/arrow-down.svg",
+    isGrowth: true,
+    percentage: 8.9,
+    isPercentageRise: true,
+    totalFunds: "18%"
+  },
+  {
+    logo: "/icons/total-fund.png",
+    statName: "Funds Raised",
+    directionImage:  "/icons/arrow-down.svg",
+    isGrowth: false,
+    percentage: 1.5,
+    isPercentageRise: false,
+    totalFunds: "$2,500"
+  }
+];
+
+
+export const INVESTMENT_OPPORTUNITIES_MOCK: famerCampaignCardProps[] = [
+  {
+    farmerName: "Amina Yusuf",
+    opportunity: {
+      id: "opp-001",
+      title: "Irrigation System Upgrade",
+      slug: "irrigation-system-upgrade",
+      farmerId: "farm-001",
+      description: "Help Amina install a modern drip irrigation system to conserve water and boost vegetable yields.",
+      shortDescription: "Modern drip irrigation for water conservation and higher yields.",
+      type: "farm_expansion",
+      goalAmount: 5000,
+      minInvestment: 100,
+      currentAmount: 3200,
+      returnRate: 8,
+      durationMonths: 12,
+      riskLevel: "medium",
+      images: [
+        {
+          url: "/images/campaign-1.png",
+          alt: "Amina Yusuf's irrigation project"
+        }
+      ],
+      milestones: [
+        {
+          id: "milestone-001",
+          title: "System Design",
+          description: "Complete irrigation system design",
+          targetDate: new Date("2025-06-15"),
+          status: "pending"
+        },
+        {
+          id: "milestone-002",
+          title: "Equipment Purchase",
+          description: "Buy drip irrigation equipment",
+          targetDate: new Date("2025-07-01"),
+          status: "pending"
+        }
+      ],
+      status: "failed",
+      investors: 24,
+      startDate: new Date("2025-05-01"),
+      endDate: new Date("2025-07-31"),
+      createdAt: new Date("2025-04-20"),
+      updatedAt: new Date("2025-05-10"),
+      location: {
+        city: "Kano",
+        state: "Kano",
+        country: "Nigeria"
+      },
+      featured: true
+    }
+  },
+  {
+    farmerName: "Kwame Mensah",
+    opportunity: {
+      id: "opp-002",
+      title: "Organic Fertilizer Project",
+      slug: "organic-fertilizer-project",
+      farmerId: "farm-002",
+      description: "Support Kwame's transition to organic farming by funding eco-friendly fertilizers for his maize farm.",
+      shortDescription: "Eco-friendly fertilizers for organic maize farming.",
+      type: "logistics",
+      goalAmount: 3000,
+      minInvestment: 50,
+      currentAmount: 1800,
+      returnRate: 7,
+      durationMonths: 8,
+      riskLevel: "low",
+      images: [
+        {
+          url: "/images/campaign-2.png",
+          alt: "Kwame Mensah's fertilizer project"
+        }
+      ],
+      milestones: [
+        {
+          id: "milestone-003",
+          title: "Fertilizer Sourcing",
+          description: "Source organic fertilizers",
+          targetDate: new Date("2025-06-10"),
+          status: "pending"
+        },
+        {
+          id: "milestone-004",
+          title: "Application",
+          description: "Apply fertilizers to maize fields",
+          targetDate: new Date("2025-07-05"),
+          status: "pending"
+        }
+      ],
+      status: "in_progress",
+      investors: 15,
+      startDate: new Date("2025-05-10"),
+      endDate: new Date("2025-07-30"),
+      createdAt: new Date("2025-04-25"),
+      updatedAt: new Date("2025-05-10"),
+      location: {
+        city: "Kumasi",
+        state: "Ashanti",
+        country: "Ghana"
+      },
+      featured: false
+    }
+  },
+  {
+    farmerName: "Ngozi Okafor",
+    opportunity: {
+      id: "opp-003",
+      title: "Greenhouse Expansion",
+      slug: "greenhouse-expansion",
+      farmerId: "farm-003",
+      description: "Ngozi needs your help to expand her greenhouse and grow more fresh tomatoes year-round.",
+      shortDescription: "Expand greenhouse for year-round tomato production.",
+      type: "farm_expansion",
+      goalAmount: 8000,
+      minInvestment: 200,
+      currentAmount: 4500,
+      returnRate: 10,
+      durationMonths: 18,
+      riskLevel: "medium",
+      images: [
+        {
+          url: "/images/campaign-3.png",
+          alt: "Ngozi Okafor's greenhouse expansion"
+        }
+      ],
+      milestones: [
+        {
+          id: "milestone-005",
+          title: "Site Preparation",
+          description: "Prepare land for expansion",
+          targetDate: new Date("2025-06-20"),
+          status: "pending"
+        },
+        {
+          id: "milestone-006",
+          title: "Construction",
+          description: "Build greenhouse extension",
+          targetDate: new Date("2025-08-01"),
+          status: "pending"
+        }
+      ],
+      status: "in_progress",
+      investors: 32,
+      startDate: new Date("2025-05-15"),
+      endDate: new Date("2025-11-15"),
+      createdAt: new Date("2025-04-28"),
+      updatedAt: new Date("2025-05-10"),
+      location: {
+        city: "Enugu",
+        state: "Enugu",
+        country: "Nigeria"
+      },
+      featured: true
+    }
+  },
+  {
+    farmerName: "Samuel Adeyemi",
+    opportunity: {
+      id: "opp-004",
+      title: "Solar-Powered Cold Storage",
+      slug: "solar-powered-cold-storage",
+      farmerId: "farm-004",
+      description: "Join Samuel in building a solar-powered cold storage unit to reduce post-harvest losses.",
+      shortDescription: "Solar cold storage to reduce post-harvest losses.",
+      type: "logistics",
+      goalAmount: 6000,
+      minInvestment: 150,
+      currentAmount: 2750,
+      returnRate: 9,
+      durationMonths: 10,
+      riskLevel: "medium",
+      images: [
+        {
+          url: "/images/campaign-1.png",
+          alt: "Samuel Adeyemi's cold storage project"
+        }
+      ],
+      milestones: [
+        {
+          id: "milestone-007",
+          title: "Solar Panel Installation",
+          description: "Install solar panels",
+          targetDate: new Date("2025-06-25"),
+          status: "pending"
+        },
+        {
+          id: "milestone-008",
+          title: "Cold Room Setup",
+          description: "Build and equip cold room",
+          targetDate: new Date("2025-07-20"),
+          status: "pending"
+        }
+      ],
+      status: "open",
+      investors: 19,
+      startDate: new Date("2025-05-12"),
+      endDate: new Date("2025-08-12"),
+      createdAt: new Date("2025-04-30"),
+      updatedAt: new Date("2025-05-10"),
+      location: {
+        city: "Ibadan",
+        state: "Oyo",
+        country: "Nigeria"
+      },
+      featured: false
+    }
+  }
+];
 
 
 

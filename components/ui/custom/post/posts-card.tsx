@@ -25,14 +25,15 @@ const PostsCard: React.FC<PostsCardProps> = ({
       </div>
 
       {/* Body */}
-      <div className="body flex flex-col">
+      <div className="body flex flex-col space-y-1">
         {/* Image */}
-        <div className="image w-full h-16 flex-shrink-0 mr-4 pl-1">
+        <div className="">
           <ImageBlur
             src={imageUrl || defaultImageUrl}
             alt="post image"
-            width={260}
-            height={260}
+            className="w-full"
+            width={800}
+            height={800}
           />
         </div>
 
