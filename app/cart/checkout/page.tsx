@@ -2,6 +2,8 @@
 import React, { useState } from "react";
 import ImageBlur from "@/components/common/ImageBlur";
 import Link from "next/link";
+import { BASE_URL } from "@/constants/mock-data";
+import axios from "axios";    
 
 const CheckoutPage = () => {
   const [cartItems] = useState(() => {
@@ -12,26 +14,6 @@ const CheckoutPage = () => {
   });
 
   const [activeTab, setActiveTab] = useState("delivery");
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    address: "",
-    city: "",
-    country: "Ghana",
-    state: "",
-    zipCode: "",
-    email: "",
-    phone: "",
-    deliveryMethod: "standard",
-    paymentMethod: "credit-card",
-    cardNumber: "",
-    cardName: "",
-    expiry: "",
-    cvv: "",
-    momoNumber: "",
-    momoNetwork: "mtn",
-    saveInfo: false,
-  });
 
   interface CartItem {
     id: string;
@@ -52,29 +34,126 @@ const CheckoutPage = () => {
   const shipping = subtotal > 100 ? 0 : 15;
   const total = subtotal + tax + shipping;
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
-    const { name, value, type } = e.target as HTMLInputElement;
-    const checked =
-      type === "checkbox" ? (e.target as HTMLInputElement).checked : undefined;
 
-    setFormData({
-      ...formData,
-      [name]: type === "checkbox" ? checked : value,
-    });
+
+  // const handleSubmit = (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   // Process checkout logic here
+  //   console.log("Checkout submitted:", formData);
+  //   // Clear cart after successful checkout
+  //   localStorage.removeItem("cart");
+  //   // Redirect to confirmation page
+  //   // window.location.href = "/cart/checkout/success";
+  // };
+const [formData, setFormData] = useState({
+  firstName: "",
+  lastName: "",
+  address: "",
+  city: "",
+  country: "Ghana",
+  state: "",
+  zipCode: "",
+  email: "",
+  phone: "",
+  deliveryMethod: "standard",
+  paymentMethod: "credit-card",
+  cardNumber: "",
+  cardName: "",
+  expiry: "",
+  cvv: "",
+  momoNumber: "",
+  momoNetwork: "mtn",
+  saveInfo: false,
+  notes: ""
+});
+
+// Handle form input changes
+const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const { name, value, type } = e.target;
+  const checked = type === 'checkbox' ? (e.target as HTMLInputElement).checked : undefined;
+  
+  setFormData(prev => ({
+    ...prev,
+    [name]: type === 'checkbox' ? checked : value
+  }));
+};
+
+// Handle order submission
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  
+  // Calculate order totals
+  const subtotal = cartItems.reduce(
+    (sum: number, item: CartItem) => sum + (item.discountedPrice || item.price) * item.quantity,
+    0
+  );
+  const tax = subtotal * 0.1;
+  const shipping = formData.deliveryMethod === 'standard' ? 
+    (subtotal > 100 ? 0 : 15) : 25;
+  const total = subtotal + tax + shipping;
+
+  // Prepare order payload
+  const orderPayload = {
+    customer: {
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      email: formData.email,
+      phone: formData.phone,
+      isGuest: true // Or set based on auth status
+    },
+    // Include userId only if user is logged in
+    // ...(isAuthenticated && { userId: currentUser._id }),
+
+    items: cartItems.map(item => ({
+      productId: item.productId || item.variantId,
+      productName: item.name,
+      variantId: item.variantId,
+      variantName: item.variantName || `${item.weight}${item.weightUnit}`,
+      quantity: item.quantity,
+      price: item.price,
+      total: item.price * item.quantity,
+      weight: item.weight,
+      weightUnit: item.weightUnit,
+      farmerId: item.farmerId || "684022d5298ea52c7a655619"
+    })),
+    shipping: {
+      address: {
+        street: formData.address,
+        city: formData.city,
+        state: formData.state,
+        country: formData.country,
+        postalCode: formData.zipCode
+      },
+      method: formData.deliveryMethod,
+      cost: shipping,
+      estimatedDelivery: new Date(Date.now() + 
+        (formData.deliveryMethod === 'standard' ? 5 * 24 * 60 * 60 * 1000 : 2 * 24 * 60 * 60 * 1000))
+    },
+    payment: {
+      method: formData.paymentMethod,
+      status: "pending",
+      total: total,
+      ...(formData.paymentMethod === 'credit-card' && {
+        transactionId: `txn_${Math.random().toString(36).substr(2, 9)}`
+      })
+    },
+    subtotal: subtotal,
+    tax: tax,
+    total: total,
+    notes: formData.notes || undefined
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Process checkout logic here
-    console.log("Checkout submitted:", formData);
-    // Clear cart after successful checkout
-    localStorage.removeItem("cart");
-    // Redirect to confirmation page
+  console.log(orderPayload)
+  try {
+    const response = await axios.post(`${BASE_URL}/api/orders`, orderPayload);
+    localStorage.removeItem('cart');
+    console.log(response.data)
     window.location.href = "/cart/checkout/success";
-  };
-
+  } catch (error) {
+    console.error('Order submission failed:', error);
+    alert('Order submission failed. Please try again.');
+  }
+};
   return (
     <div className="container mx-auto px-4 py-8 mt-30">
       <div className="flex flex-col lg:flex-row gap-8">
@@ -524,7 +603,7 @@ const CheckoutPage = () => {
                   <div className="space-y-4">
                     {cartItems.map((item: CartItem) => (
                       <div
-                        key={item.id}
+                        key={item._id}
                         className="flex items-center justify-between border-b border-gray-200 dark:border-gray-700 pb-4"
                       >
                         <div className="flex items-center">

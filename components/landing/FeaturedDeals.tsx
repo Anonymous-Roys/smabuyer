@@ -1,11 +1,26 @@
-import React from "react";
+'use client'
+import React, { useEffect, useState } from "react";
 import ProductCard from "../ui/custom/product/custom-product-card";
-import products from "@/constants/mock-data";
+import { getAllProducts } from "@/constants/mock-data";
 import ImageBlur from "../common/ImageBlur";
 import Link from "next/link";
 import { getDiscount } from "@/lib/product-utils/price";
 
 const FeaturedDeals: React.FC = () => {
+  const [products, setProducts] = useState([]);
+  useEffect(() => {
+  const loadProducts = async () => {
+    try {
+      const products = await getAllProducts();
+      setProducts(products);
+    } catch (err) {
+      console.error('Could not load products:', err);
+    }
+  };
+
+  loadProducts();
+}, []);
+
   return (
     <section className="container mx-auto px-4 py-10 space-y-8">
       <h2 className="section-title flex justify-between px-2 items-center">
@@ -30,7 +45,7 @@ const FeaturedDeals: React.FC = () => {
         <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 mt-6">
           {products.map((product) => (
             <ProductCard
-              key={product.id}
+              key={product._id}
               imageUrl={product.images[0]?.url || "/images/Image.png"}
               name={product.name}
               price={product.variants[0]?.price || 0}

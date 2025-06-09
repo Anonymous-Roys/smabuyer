@@ -49,7 +49,7 @@ const ProductCard = forwardRef<HTMLDivElement, EnhancedProductCardProps>(
     : discount || 0;
 
   const cartItem: CartItem = {
-    productId: displayProduct.id,
+    productId: displayProduct._id,
     variantId: selectedVariant.id,
     slug: displayProduct.slug,
     name: `${displayProduct.name} - ${selectedVariant.name}`,

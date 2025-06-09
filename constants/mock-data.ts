@@ -955,167 +955,6 @@ export const INVESTMENT_OPPORTUNITIES_MOCK: famerCampaignCardProps[] = [
 
 
 
-// const PRODUCTS: ProductCardProps[] = [
-//   {
-//     name: "Chinese Cabbage",
-//     price: 12,
-//     rating: 4.5,
-//     imageAlt: "Product 1 Image",
-//     category: "Vegetables",
-//     tags: ["leafy", "fresh"],
-//     farmer: "Farmer John",
-//     description:
-//       "Fresh Chinese cabbage, perfect for salads, stir-fries, or soups. Its crisp texture and mild flavor make it a versatile ingredient for a variety of dishes.",
-//     additionalInfo: { organic: true, weight: "1kg" },
-//   },
-//   {
-//     imageUrl: "/images/product2.jpg",
-//     name: "Green Lettuce",
-//     price: 9,
-//     rating: 4.0,
-//     imageAlt: "Product 2 Image",
-//     productsRemaining: 50,
-//     bulkPrice: 8,
-//     category: "Vegetables",
-//     tags: ["leafy", "crisp"],
-//     farmer: "Farmer Jane",
-//     description:
-//       "Crisp green lettuce for your healthy meals. Perfect for making fresh salads, sandwiches, or wraps. Its refreshing crunch adds a delightful texture to any dish.",
-//     additionalInfo: { organic: true, weight: "500g" },
-//   },
-//   {
-//     imageUrl: "/images/product3.jpg",
-//     name: "Eggplant",
-//     price: 34,
-//     rating: 4.8,
-//     imageAlt: "Product 3 Image",
-//     category: "Vegetables",
-//     tags: ["purple", "fresh"],
-//     farmer: "Farmer Joe",
-//     description:
-//       "Fresh eggplants, great for grilling, roasting, or making delicious curries. Their rich, creamy texture and slightly smoky flavor make them a favorite in many cuisines.",
-//     additionalInfo: { organic: false, weight: "1.5kg" },
-//   },
-//   {
-//     imageUrl: "/images/product4.jpg",
-//     name: "Fresh Cauliflower",
-//     price: 12,
-//     rating: 4.2,
-//     imageAlt: "Product 4 Image",
-//     productsRemaining: 30,
-//     bulkPrice: 10,
-//     category: "Vegetables",
-//     tags: ["white", "crunchy"],
-//     farmer: "Farmer Anna",
-//     description:
-//       "Fresh cauliflower, perfect for curries, roasting, or making cauliflower rice. Its mild flavor and versatility make it a staple in many kitchens.",
-//     additionalInfo: { organic: true, weight: "1kg" },
-//   },
-//   {
-//     imageUrl: "/images/product5.jpg",
-//     name: "Green Capsicum",
-//     price: 20.99,
-//     rating: 4.7,
-//     discount: 50,
-//     imageAlt: "Product 5 Image",
-//     category: "Vegetables",
-//     tags: ["green", "crunchy"],
-//     farmer: "Farmer Mike",
-//     description:
-//       "Fresh green capsicum, ideal for stir-fries, salads, or stuffing. Its crisp texture and slightly sweet flavor add a vibrant touch to any dish.",
-//     additionalInfo: { organic: true, weight: "500g" },
-//   },
-//   {
-//     imageUrl: "/images/product6.jpg",
-//     name: "Green Chili",
-//     price: 34,
-//     rating: 2,
-//     imageAlt: "Product 6 Image",
-//     productsRemaining: 100,
-//     bulkPrice: 30,
-//     category: "Spices",
-//     tags: ["spicy", "green"],
-//     farmer: "Farmer Sam",
-//     description:
-//       "Fresh green chilies for adding spice to your dishes. Perfect for curries, salsas, or pickling, these chilies pack a punch of heat and flavor.",
-//     additionalInfo: { organic: false, weight: "250g" },
-//   },
-//   {
-//     imageUrl: "/images/product7.jpg",
-//     name: "Red Chili",
-//     price: 12,
-//     rating: 4.6,
-//     imageAlt: "Product 7 Image",
-//     category: "Spices",
-//     tags: ["spicy", "red"],
-//     farmer: "Farmer Sam",
-//     description:
-//       "Fresh red chilies for a fiery flavor. Ideal for making chili paste, sauces, or adding a bold kick to your favorite recipes.",
-//     additionalInfo: { organic: false, weight: "250g" },
-//   },
-//   {
-//     imageUrl: "/images/product8.jpg",
-//     name: "Red Tomatos",
-//     price: 20,
-//     rating: 4.9,
-//     discount: 50,
-//     imageAlt: "Product 8 Image",
-//     productsRemaining: 80,
-//     bulkPrice: 18,
-//     category: "Vegetables",
-//     tags: ["red", "juicy"],
-//     farmer: "Farmer Lucy",
-//     description:
-//       "Fresh red tomatoes, perfect for sauces, salads, or sandwiches. Their juicy texture and rich flavor make them a must-have in every kitchen.",
-//     additionalInfo: { organic: true, weight: "1kg" },
-//   },
-//   {
-//     imageUrl: "/images/product9.jpg",
-//     name: "Surjapur Mango",
-//     price: 34,
-//     rating: 4.1,
-//     imageAlt: "Product 9 Image",
-//     category: "Fruits",
-//     tags: ["sweet", "yellow"],
-//     farmer: "Farmer Raj",
-//     description:
-//       "Juicy Surjapur mangoes, a tropical delight. Enjoy their sweet, rich flavor as a snack, in desserts, or blended into smoothies.",
-//     additionalInfo: { organic: true, weight: "1.5kg" },
-//   },
-//   {
-//     imageUrl: "/images/product10.jpg",
-//     name: "Corn",
-//     price: 12,
-//     rating: 4.4,
-//     imageAlt: "Product 10 Image",
-//     productsRemaining: 60,
-//     bulkPrice: 10,
-//     category: "Vegetables",
-//     tags: ["yellow", "sweet"],
-//     farmer: "Farmer Ben",
-//     description:
-//       "Fresh corn, perfect for boiling, grilling, or adding to soups and salads. Its natural sweetness and tender kernels make it a favorite for all ages.",
-//     additionalInfo: { organic: false, weight: "2kg" },
-//   },
-//   {
-//     imageUrl: "/images/product11.jpg",
-//     name: "Big Potatoes",
-//     price: 12,
-//     rating: 4.0,
-//     discount: 10,
-//     imageAlt: "Product 11 Image",
-//     category: "Vegetables",
-//     tags: ["starchy", "brown"],
-//     farmer: "Farmer Kate",
-//     description:
-//       "Big potatoes, ideal for baking, frying, or mashing. Their hearty texture and earthy flavor make them a versatile ingredient for countless recipes.",
-//     additionalInfo: { organic: true, weight: "3kg" },
-//   },
-// ];
-
-
-// export default PRODUCTS;
-
 export const HOTDEAL = {
   imageUrl: "/images/product5.jpg",
   name: "Green Capsicum",
@@ -1128,18 +967,65 @@ export const HOTDEAL = {
 };
 
 
-export function getProductBySlug(slug: string) {
-  return products.find((p) => p.slug === slug);
-}
+// export function getProductBySlug(slug: string) {
+//   return products.find((p) => p.slug === slug);
+// }
 // New function to get all products
-export function getAllProducts(): Product[] {
-  return products;
-}
+// export function getAllProducts(): Product[] {
+//   return products;
+// }
+
+export const BASE_URL = "http://localhost:10000";
+
+export const getAllProducts = async () => {
+  try {
+    const response = await fetch(`${BASE_URL}/api/products`);
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data.data; // assuming this is an array of products
+  } catch (error) {
+    console.error('Failed to fetch products:', error);
+    return products
+    // throw error;
+  }
+};
+
+export const getProductBySlug = async (slug: string) => {
+  const response = await fetch(`${BASE_URL}/api/products/${slug}`);
+
+  if (!response.ok) {
+   return products.find((p) => p.slug === slug);
+  }
+  if (!response.ok) {
+    throw new Error(`Product not found (slug: ${slug})`);
+  }
+
+  return response.json();
+};
+
 
 // Optional: Function to get related products
-export function getRelatedProducts(currentProductId: string, categories: string[]): Product[] {
-  return products.filter(product =>
-    product.id !== currentProductId &&
-    product.categories.some(category => categories.includes(category))
-  ).slice(0, 4); // Limit to 4 related products
+// export function getRelatedProducts(currentProductId: string, categories: string[]): Product[] {
+//   return products.filter(product =>
+//     product.id !== currentProductId &&
+//     product.categories.some(category => categories.includes(category))
+//   ).slice(0, 4); // Limit to 4 related products
+// }
+
+export async function getRelatedProducts(slug: string, categories: string[]): Promise<Product[]> {
+  const params = new URLSearchParams();
+  params.append('slug', slug);
+  params.append('categories', categories.join(','));
+
+  const response = await fetch(`${BASE_URL}/api/products/related?${params.toString()}`);
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch related products');
+  }
+
+  return response.json();
 }
