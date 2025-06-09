@@ -72,7 +72,7 @@ const Footer = () => {
             {/* Helps Section */}
             <FooterSection title="Helps">
               <FooterLink href="/contact">Contact</FooterLink>
-              <FooterLink href="/faqs">Faqs</FooterLink>
+              <a href="https://247sma-pf4z.vercel.app/farmers/overview">Farmer</a>
               <FooterLink href="/terms">Terms & Condition</FooterLink>
               <FooterLink href="/privacy">Privacy Policy</FooterLink>
             </FooterSection>
