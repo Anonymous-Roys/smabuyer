@@ -975,7 +975,7 @@ export const HOTDEAL = {
 //   return products;
 // }
 
-export const BASE_URL = "http://localhost:10000";
+export const BASE_URL = "https://two47sma.onrender.com";
 
 export const getAllProducts = async () => {
   try {
