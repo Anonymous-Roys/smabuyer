@@ -17,6 +17,7 @@ import { Button } from "../ui/button";
 import { isAuthenticated, clearToken } from "@/lib/utils/auth";
 import { toast } from "react-toastify";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { CartItem } from "@/types/product";
 
 // nav items
 interface NavItem {
@@ -30,7 +31,7 @@ const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [profileImage, setProfileImage] = useState<string | null>(null);
-  const [cartItems, setCartItems] = useState<any[]>([]);
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const pathname = usePathname();
 
   // Check auth status on mount and route changes

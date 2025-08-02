@@ -39,6 +39,7 @@ interface ProductVariant {
 }
 
 interface Product {
+  _id?: string | null; // Optional ID for MongoDB or other databases
   id: string;
   farmerId: string;
   name: string;
@@ -110,7 +111,8 @@ type PaymentStatus =
 
 
 export interface CartItem {
-  productId: string;          // Original product ID
+  // _id?: string;              // Unique identifier for the cart item
+  productId: string | null | undefined;          // Original product ID
   variantId: string;          // Selected variant ID
   name: string;               // Product name + variant (e.g., "Organic Apples - 1kg")
   price: number;  
@@ -183,6 +185,36 @@ interface Order {
   updatedAt: Date;
   completedAt?: Date;
 }
+
+export type WishlistItem = {
+  _id?: string | null; // Optional ID for MongoDB or other databases
+  id: string;
+  farmerId: string;
+  name: string;
+  slug: string;
+  description: string;
+  shortDescription: string;
+  categories: ProductCategory[];
+  images: ProductImage[];
+  variants: ProductVariant[];
+  harvestDate?: Date;
+  bestBefore?: Date;
+  certifications: string[];
+  isOrganic: boolean;
+  status: ProductStatus;
+  averageRating: number;
+  reviewCount: number;
+  createdAt: Date;
+  updatedAt: Date;
+  featured: boolean;
+  metaTitle?: string;
+  metaDescription?: string;
+  tags?: string[];
+  addedToWishlist: Date;
+  isInWishlist: boolean;
+ 
+};
+
 
 export {
   ProductCategory,

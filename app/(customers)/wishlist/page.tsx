@@ -23,22 +23,8 @@ import Image from "next/image";
 import Link from "next/link";
 import ProductCard from "@/components/ui/custom/product/custom-product-card";
 import products from "@/constants/mock-data";
-// import { Product } from "@/types/product";
+import { Product, WishlistItem } from "@/types/product";
 
-type WishlistItem = {
-  id: string;
-  name: string;
-  slug: string;
-  images: { url: string }[];
-  shortDescription: string;
-  averageRating: number;
-  variants: {
-    price: number;
-    comparedAtPrice?: number;
-  }[];
-  addedToWishlist: Date;
-  isInWishlist: boolean;
-};
 
 const WishlistPage = () => {
   const [wishlistItems, setWishlistItems] = useState<WishlistItem[]>([]);
@@ -61,7 +47,7 @@ const WishlistPage = () => {
     setWishlistItems(prev => prev.filter(item => item.id !== productId));
   };
 
-  const handleAddToCart = (product: any) => {
+  const handleAddToCart = (product: Product) => {
     // Add to cart logic here
     console.log('Added to cart:', product.name);
   };
@@ -408,7 +394,7 @@ const WishlistPage = () => {
               </h2>
               <p className="text-xl text-green-100 mb-8">
                 Add your wishlist items to cart and complete your purchase. 
-                Don't miss out on these amazing products!
+                Don&#39;t miss out on these amazing products!
               </p>
               <motion.div
                 className="flex flex-col sm:flex-row gap-4 justify-center"
