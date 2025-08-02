@@ -1,3 +1,4 @@
+'use client';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Mail } from 'lucide-react';
@@ -21,8 +22,12 @@ export default function ForgotPasswordPage() {
       await forgotPassword(email);
       toast.success('Password reset email sent! Please check your inbox.');
       router.push('/login');
-    } catch (error: any) {
-      toast.error(error.message || 'Failed to send reset email. Please try again.');
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        toast.error(error.message || 'Failed to send reset email. Please try again.');
+      } else {
+        toast.error('Failed to send reset email. Please try again.');
+      }
     } finally {
       setIsLoading(false);
     }
@@ -44,10 +49,12 @@ export default function ForgotPasswordPage() {
           required
         />
 
-        <Button type="submit" 
-        // loading={isLoading} 
-        className="w-full">
-          SEND RESET LINK
+        <Button 
+          type="submit"
+          disabled={isLoading}
+          className="w-full"
+        >
+          {isLoading ? 'SENDING...' : 'SEND RESET LINK'}
         </Button>
 
         <div className="text-center">

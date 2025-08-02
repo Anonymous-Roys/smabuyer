@@ -1,3 +1,4 @@
+'use client';
 import { useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { Lock, Eye, EyeOff } from 'lucide-react';
@@ -84,8 +85,8 @@ export default function ResetPasswordPage() {
           />
         </div>
 
-        <Button type="submit" className="w-full">
-          RESET PASSWORD
+        <Button type="submit" className="w-full" disabled={isLoading}>
+          {isLoading ? 'RESETTING...' : 'RESET PASSWORD'}
         </Button>
       </form>
     </AuthLayout>

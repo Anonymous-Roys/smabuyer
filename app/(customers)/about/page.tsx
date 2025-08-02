@@ -17,7 +17,7 @@ import {
   Shield, 
   TrendingUp,
   CheckCircle,
-  Star
+
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -324,7 +324,7 @@ const AboutPage = () => {
               Join the Agricultural Revolution
             </h2>
             <p className="text-xl text-green-100 mb-8">
-              Whether you're a farmer, consumer, or investor, there's a place for you 
+              Whether you&#39;re a farmer, consumer, or investor, there&#39;s a place for you 
               in our mission to transform African agriculture.
             </p>
             <motion.div
