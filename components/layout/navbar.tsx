@@ -30,6 +30,7 @@ const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [profileImage, setProfileImage] = useState<string | null>(null);
+  const [cartItems, setCartItems] = useState<any[]>([]);
   const pathname = usePathname();
 
   // Check auth status on mount and route changes
@@ -38,6 +39,36 @@ const Navbar = () => {
     const storedImage = localStorage.getItem('profileImage');
     if (storedImage) setProfileImage(storedImage);
   }, [pathname]);
+
+  // Load cart items from localStorage
+  useEffect(() => {
+    const loadCartItems = () => {
+      if (typeof window !== "undefined") {
+        const storedCart = localStorage.getItem("cart");
+        if (storedCart) {
+          try {
+            const cart = JSON.parse(storedCart);
+            setCartItems(cart);
+          } catch (error) {
+            console.error("Error parsing cart data:", error);
+            setCartItems([]);
+          }
+        }
+      }
+    };
+
+    loadCartItems();
+
+    // Listen for cart updates
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === "cart") {
+        loadCartItems();
+      }
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+    return () => window.removeEventListener("storage", handleStorageChange);
+  }, []);
 
   // Handling scrolling effect
   useEffect(() => {
@@ -64,6 +95,9 @@ const Navbar = () => {
     // Optional: Redirect to home page after logout
     window.location.href = '/';
   };
+
+  // Calculate total cart items count
+  const cartItemsCount = cartItems.reduce((total, item) => total + item.quantity, 0);
 
   const navItems: NavItem[] = [
     {
@@ -144,6 +178,30 @@ const Navbar = () => {
           </motion.div>
         </nav>
         
+        {/* Cart Icon */}
+        <motion.div
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5, delay: 0.15 }}
+          className="hidden md:flex items-center"
+        >
+          <Link href="/cart" className="relative p-2 hover:bg-gray-100 rounded-full transition-colors duration-200">
+            <ShoppingCart 
+              size={24} 
+              className={isScrolled ? "text-gray-700" : "text-white"} 
+            />
+            {cartItemsCount > 0 && (
+              <motion.div
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-semibold"
+              >
+                {cartItemsCount > 99 ? "99+" : cartItemsCount}
+              </motion.div>
+            )}
+          </Link>
+        </motion.div>
+
         {/* Auth Buttons */}
         <motion.div
           initial={{ opacity: 0, x: 20 }}
@@ -265,6 +323,21 @@ const Navbar = () => {
                     )}
                   </div>
                 ))}
+
+                {/* Mobile Cart Icon */}
+                <div className="flex items-center justify-between pt-6 border-t border-border">
+                  <Link href="/cart" className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition">
+                    <div className="relative">
+                      <ShoppingCart size={20} />
+                      {cartItemsCount > 0 && (
+                        <div className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center font-semibold">
+                          {cartItemsCount > 99 ? "99+" : cartItemsCount}
+                        </div>
+                      )}
+                    </div>
+                    <span>Cart ({cartItemsCount})</span>
+                  </Link>
+                </div>
 
                 <div className="flex flex-col gap-y-3 pt-6 border-t border-border">
                   {isLoggedIn ? (
