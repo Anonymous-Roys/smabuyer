@@ -32,7 +32,7 @@ export default function ProfilePage() {
           points: 0,
         };
         setUser(mockUser);
-        
+        console.log(selectedFile);
         // Load profile image from localStorage
         const storedImage = localStorage.getItem('profileImage');
         if (storedImage) setProfileImage(storedImage);

@@ -13,7 +13,6 @@ import {
   ShoppingCart, 
   Eye, 
   Share2,
-  Filter,
   Search,
   Grid,
   List,
@@ -24,9 +23,25 @@ import Image from "next/image";
 import Link from "next/link";
 import ProductCard from "@/components/ui/custom/product/custom-product-card";
 import products from "@/constants/mock-data";
+// import { Product } from "@/types/product";
+
+type WishlistItem = {
+  id: string;
+  name: string;
+  slug: string;
+  images: { url: string }[];
+  shortDescription: string;
+  averageRating: number;
+  variants: {
+    price: number;
+    comparedAtPrice?: number;
+  }[];
+  addedToWishlist: Date;
+  isInWishlist: boolean;
+};
 
 const WishlistPage = () => {
-  const [wishlistItems, setWishlistItems] = useState<any[]>([]);
+  const [wishlistItems, setWishlistItems] = useState<WishlistItem[]>([]);
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [sortBy, setSortBy] = useState('name');
   const [searchTerm, setSearchTerm] = useState('');
@@ -248,7 +263,7 @@ const WishlistPage = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                   {sortedItems.map((item, index) => (
                     <motion.div
-                      key={item.id}
+                      key={item.id || index}
                       variants={itemVariants}
                       className="relative group"
                     >
@@ -280,7 +295,7 @@ const WishlistPage = () => {
                 <div className="space-y-4">
                   {sortedItems.map((item, index) => (
                     <motion.div
-                      key={item.id}
+                      key={item.id || index}
                       variants={itemVariants}
                       className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow duration-300"
                     >

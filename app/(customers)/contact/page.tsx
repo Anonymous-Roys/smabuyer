@@ -13,11 +13,9 @@ import {
   MapPin, 
   Clock, 
   Send, 
-  MessageSquare,
   Globe,
   Users,
   Building,
-  CheckCircle
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -121,7 +119,7 @@ const ContactPage = () => {
               className="text-4xl md:text-6xl font-bold mb-6 leading-tight"
               variants={itemVariants}
             >
-              Let's Connect
+              Let&#39;s Connect
               <span className="block text-green-200">Together</span>
             </motion.h1>
             
@@ -130,7 +128,7 @@ const ContactPage = () => {
               variants={itemVariants}
             >
               Have questions about our services? Want to partner with us? 
-              We're here to help you succeed in the agricultural revolution.
+              We&#39;re here to help you succeed in the agricultural revolution.
             </motion.p>
           </motion.div>
         </div>
@@ -193,7 +191,7 @@ const ContactPage = () => {
                 Send Us a Message
               </h2>
               <p className="text-lg text-gray-600 mb-8">
-                Fill out the form below and we'll get back to you as soon as possible.
+                Fill out the form below and we&#39;ll get back to you as soon as possible.
               </p>
               
               <form onSubmit={handleSubmit} className="space-y-6">
@@ -281,7 +279,7 @@ const ContactPage = () => {
                 Visit Our Office
               </h2>
               <p className="text-lg text-gray-600 mb-8">
-                Come visit us at our main office in Tarkwa, Ghana. We'd love to meet you in person!
+                Come visit us at our main office in Tarkwa, Ghana. We&#39;d love to meet you in person!
               </p>
               
               <div className="relative h-96 rounded-2xl overflow-hidden shadow-2xl mb-6">
@@ -405,7 +403,7 @@ const ContactPage = () => {
               </h3>
               <p className="text-gray-600">
                 Contact our Farmer Relations team at farmers@smagritrade.com or call us directly. 
-                We'll guide you through the registration process and help you get started.
+                We&#39;ll guide you through the registration process and help you get started.
               </p>
             </motion.div>
             
@@ -469,7 +467,7 @@ const ContactPage = () => {
             </h2>
             <p className="text-xl text-green-100 mb-8">
               Join thousands of farmers and consumers who are already part of the 
-              agricultural revolution. Let's build a better future together.
+              agricultural revolution. Let&#39;s build a better future together.
             </p>
             <motion.div
               className="flex flex-col sm:flex-row gap-4 justify-center"
