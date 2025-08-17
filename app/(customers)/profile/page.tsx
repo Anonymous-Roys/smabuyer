@@ -9,7 +9,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card } from '@/components/ui/card';
 import Input from '@/components/ui/Input';
 import { getUserProfile, updateUserProfile, uploadProfileImage } from '@/lib/utils/api';
-import { getToken, isAuthenticated, getProfileImage, storeProfileImage } from '@/lib/utils/auth';
+import {  isAuthenticated, getProfileImage, storeProfileImage } from '@/lib/utils/auth';
 
 interface UserProfile {
   id: string;
