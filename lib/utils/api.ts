@@ -2,7 +2,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { getToken } from './auth';
 
-const BASE_URL = 'http://localhost:10000/api';
+const BASE_URL = 'https://two47sma.onrender.com';
 // process.env.NEXT_PUBLIC_API_URL || 
 
 interface ApiSuccessResponse<T> {
@@ -110,7 +110,7 @@ async function fetchApi<T>(
 export const login = async (
   credentials: { email: string; password: string }
 ): Promise<ApiResponse<{ token: string }>> => {
-  return fetchApi<{ token: string }>('/buyer/login', {
+  return fetchApi<{ token: string }>('/api/buyer/login', {
     method: 'POST',
     body: JSON.stringify(credentials),
   });
@@ -119,7 +119,7 @@ export const login = async (
 export const signup = async (
   userData: { email: string; password: string, passwordConfirm: string }
 ): Promise<ApiResponse<{ message: string }>> => {
-  return fetchApi<{ message: string }>('/buyer/signup', {
+  return fetchApi<{ message: string }>('/api/buyer/signup', {
     method: 'POST',
     body: JSON.stringify(userData),
   });
@@ -128,13 +128,13 @@ export const signup = async (
 export const verifyEmail = async (
   token: string
 ): Promise<ApiResponse<{ token: string }>> => {
-  return fetchApi<{ token: string }>(`/buyer/verify-email/${token}`);
+  return fetchApi<{ token: string }>(`/api/buyer/verify-email/${token}`);
 };
 
 export const forgotPassword = async (
   email: string
 ): Promise<ApiResponse<{ message: string }>> => {
-  return fetchApi<{ message: string }>('/buyer/forgot-password', {
+  return fetchApi<{ message: string }>('/api/buyer/forgot-password', {
     method: 'POST',
     body: JSON.stringify({ email }),
   });
@@ -144,7 +144,7 @@ export const resetPassword = async (
   token: string, 
   password: string
 ): Promise<ApiResponse<{ message: string }>> => {
-  return fetchApi<{ message: string }>(`/buyer/reset-password/${token}`, {
+  return fetchApi<{ message: string }>(`/api/buyer/reset-password/${token}`, {
     method: 'PATCH',
     body: JSON.stringify({ password }),
   });
@@ -179,11 +179,11 @@ async function fetchWithAuth<T>(endpoint: string, options: RequestInit = {}): Pr
 
 // Add these to your existing API functions
 export const getUserProfile = async (): Promise<UserProfile> => {
-  return fetchWithAuth<UserProfile>('/buyer/profile');
+  return fetchWithAuth<UserProfile>('/api/buyer/profile');
 };
 
 export const updateUserProfile = async (data: Partial<UserProfile>): Promise<UserProfile> => {
-  return fetchWithAuth<UserProfile>('/buyer/profile', {
+  return fetchWithAuth<UserProfile>('/api/buyer/profile', {
     method: 'PATCH',
     body: JSON.stringify(data),
   });
@@ -193,7 +193,7 @@ export const uploadProfileImage = async (file: File): Promise<{ imageUrl: string
   const formData = new FormData();
   formData.append('profileImage', file);
 
-  const response = await fetch(`${BASE_URL}/buyer/profile/image`, {
+  const response = await fetch(`${BASE_URL}/api/buyer/profile/image`, {
     method: 'POST',
     headers: {
       'Authorization': `Bearer ${getToken()}`,
