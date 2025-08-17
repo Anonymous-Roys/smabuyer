@@ -28,7 +28,24 @@ interface UserProfile {
   profileImage?: string;
 }
 
+// Backend response interfaces
+interface BackendSuccessResponse<T> {
+  status: 'success';
+  data?: T;
+  token?: string;
+  message?: string;
+}
 
+interface BackendErrorResponse {
+  status: 'error' | 'fail';
+  message: string;
+  error?: {
+    message?: string;
+    details?: unknown;
+  };
+}
+
+type BackendResponse<T> = BackendSuccessResponse<T> | BackendErrorResponse;
 type ApiResponse<T> = ApiSuccessResponse<T> | ApiErrorResponse;
 
 async function fetchApi<T>(
@@ -46,9 +63,9 @@ async function fetchApi<T>(
 
     const contentType = response.headers.get('Content-Type') || '';
 
-    let data: T;
+    let backendData: BackendResponse<T>;
     if (contentType.includes('application/json')) {
-      data = await response.json() as T;
+      backendData = await response.json() as BackendResponse<T>;
     } else {
       const text = await response.text();
       toast.error('Unexpected server response format');
@@ -61,35 +78,37 @@ async function fetchApi<T>(
       };
     }
 
-    if (!response.ok) {
-      type ErrorData = { message?: string; error?: { message?: string; details?: unknown }; details?: unknown };
-
-      const errorMessage =
-        (typeof data === 'object' && data !== null && 'message' in data && typeof (data as ErrorData).message === 'string')
-          ? (data as ErrorData).message!
-          : (typeof data === 'object' && data !== null && 'error' in data && typeof (data as ErrorData).error?.message === 'string')
-            ? (data as ErrorData).error!.message!
-            : 'Something went wrong';
-
-      const errorDetails =
-        (typeof data === 'object' && data !== null && 'error' in data && typeof (data as ErrorData).error?.details !== 'undefined')
-          ? (data as ErrorData).error!.details
-          : (typeof data === 'object' && data !== null && 'details' in data)
-            ? (data as ErrorData).details
-            : undefined;
-
-      // toast.error(errorMessage);
-
+    if (!response.ok || backendData.status === 'error' || backendData.status === 'fail') {
+      const errorMessage = backendData.message || 'Something went wrong';
+      
       return {
         error: {
           message: errorMessage,
           statusCode: response.status,
-          details: errorDetails
+          details: (backendData as BackendErrorResponse).error?.details
         }
       };
     }
 
-    return { data };
+    // Handle successful response
+    if (backendData.status === 'success') {
+      // For login, the token is at the top level
+      if ('token' in backendData && backendData.token) {
+        return { data: { token: backendData.token } as T };
+      }
+      
+      // For other responses, return the data
+      if ('data' in backendData && backendData.data) {
+        return { data: backendData.data };
+      }
+      
+      // For responses with just a message
+      if ('message' in backendData && backendData.message) {
+        return { data: { message: backendData.message } as T };
+      }
+    }
+
+    return { data: backendData as T };
   } catch (error: unknown) {
     let errorMessage = 'Network request failed';
     if (error && typeof error === 'object' && 'message' in error && typeof (error as { message?: string }).message === 'string') {
@@ -117,8 +136,9 @@ export const login = async (
 };
 
 export const signup = async (
-  userData: { email: string; password: string, passwordConfirm: string }
+  userData: { email: string, password: string, passwordConfirm: string }
 ): Promise<ApiResponse<{ message: string }>> => {
+  
   return fetchApi<{ message: string }>('/api/buyer/signup', {
     method: 'POST',
     body: JSON.stringify(userData),
@@ -174,7 +194,14 @@ async function fetchWithAuth<T>(endpoint: string, options: RequestInit = {}): Pr
     throw new Error(errorData.message || 'Request failed');
   }
 
-  return response.json();
+  const backendData = await response.json() as BackendSuccessResponse<T>;
+  
+  // Return the data from the backend response
+  if (backendData.data) {
+    return backendData.data;
+  }
+  
+  return backendData as T;
 }
 
 // Add these to your existing API functions
@@ -206,5 +233,6 @@ export const uploadProfileImage = async (file: File): Promise<{ imageUrl: string
     throw new Error(errorData.message || 'Image upload failed');
   }
 
-  return response.json();
+  const backendData = await response.json() as BackendSuccessResponse<{ imageUrl: string }>;
+  return backendData.data || { imageUrl: '' };
 };

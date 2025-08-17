@@ -28,7 +28,10 @@ export default function ResetPasswordPage() {
     setIsLoading(true);
 
     try {
-      await resetPassword(token as string, password);
+      const result = await resetPassword(token as string, password);
+      if (result.error) {
+        throw new Error(result.error.message);
+      }
       toast.success('Password reset successfully! Please login with your new password.');
       router.push('/login');
     } catch (error: unknown) {

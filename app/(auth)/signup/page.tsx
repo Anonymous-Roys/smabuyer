@@ -28,8 +28,13 @@ export default function SignupPage() {
     setIsLoading(true);
 
     try {
-      await signup({ email, password, passwordConfirm: confirmPassword });
-      toast.success('Verification email sent! Please check your inbox.');
+      const response = await signup({ email, password, passwordConfirm: confirmPassword });
+      
+      if (response.error) {
+        throw new Error(response.error.message);
+      }
+      
+      toast.success(response.data?.message || 'Signup successful');
       router.push('/login');
     } catch (error: unknown) {
       const errorMessage =

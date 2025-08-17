@@ -19,7 +19,10 @@ export default function ForgotPasswordPage() {
     setIsLoading(true);
 
     try {
-      await forgotPassword(email);
+      const result = await forgotPassword(email);
+      if (result.error) {
+        throw new Error(result.error.message);
+      }
       toast.success('Password reset email sent! Please check your inbox.');
       router.push('/login');
     } catch (error: unknown) {
