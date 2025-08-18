@@ -364,10 +364,8 @@ export default function ProfilePage() {
                               type="file"
                               multiple
                               accept=".pdf,.jpg,.jpeg,.png"
-                              onChange={(e) => {
-                                // if (e.target.files) {
-                                  // setKycDocuments(Array.from(e.target.files));
-                                // }
+                              onChange={() => {
+                                // KYC functionality disabled
                               }}
                               className="block w-full text-sm text-gray-500
                                 file:mr-4 file:py-2 file:px-4

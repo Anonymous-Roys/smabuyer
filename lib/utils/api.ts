@@ -2,7 +2,6 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { getToken } from './auth';
 import { UserProfile } from '@/types/users';
-import { Order } from '@/types/product';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://two47sma.onrender.com';
 
@@ -249,11 +248,59 @@ export const uploadProfileImage = async (file: File) => {
   }
 };
 
-// // Orders API functions
-// export const getUserOrders = async () => {
-//   return fetchWithAuth<Order[]>('/api/buyer/orders');
-// };
+// Define order response types
+interface OrderResponse {
+  id: string;
+  customerId: string;
+  orderNumber: string;
+  items: Array<{
+    id: string;
+    productId: string;
+    productName: string;
+    variantId: string;
+    variantName: string;
+    quantity: number;
+    price: number;
+    total: number;
+    weight: number;
+    weightUnit: string;
+    farmerId: string;
+  }>;
+  subtotal: number;
+  tax: number;
+  shipping: {
+    address: {
+      street: string;
+      city: string;
+      state: string;
+      country: string;
+      postalCode: string;
+    };
+    method: string;
+    cost: number;
+    estimatedDelivery?: string;
+    trackingNumber?: string;
+  };
+  payment: {
+    method: string;
+    transactionId?: string;
+    status: string;
+    paidAt?: string;
+    total: number;
+  };
+  total: number;
+  status: string;
+  notes?: string;
+  createdAt: string;
+  updatedAt: string;
+  completedAt?: string;
+}
 
-// export const getOrderById = async (orderId: string) => {
-//   return fetchWithAuth<Order>(`/api/buyer/orders/${orderId}`);
-// };
+// Orders API functions
+export const getUserOrders = async () => {
+  return fetchWithAuth<OrderResponse[]>('/api/buyer/orders');
+};
+
+export const getOrderById = async (orderId: string) => {
+  return fetchWithAuth<OrderResponse>(`/api/buyer/orders/${orderId}`);
+};

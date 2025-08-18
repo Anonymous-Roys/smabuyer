@@ -447,7 +447,7 @@ export default function OrdersPage() {
             <Button
               key={tab.key}
               variant={activeTab === tab.key ? 'default' : 'outline'}
-              onClick={() => setActiveTab(tab.key as any)}
+              onClick={() => setActiveTab(tab.key as 'all' | 'pending' | 'processing' | 'shipped' | 'delivered' | 'cancelled')}
               className="text-sm"
             >
               {tab.label}
