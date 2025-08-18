@@ -7,6 +7,7 @@ const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://two47sma.onrender.c
 
 interface ApiSuccessResponse<T> {
   success: true;
+  token: string;
   data: T;
   statusCode?: number;
 }
@@ -73,6 +74,7 @@ async function fetchApi<T>(
     // Handle successful response
     return {
       success: true,
+      token: responseData.token,
       data: responseData.data || responseData,
       statusCode: response.status
     };
@@ -132,7 +134,7 @@ export const login = async (credentials: { email: string; password: string }) =>
     body: JSON.stringify(credentials),
   });
 
-  if (response.success && response.data.token) {
+  if (response.success && response.token) {
     return response;
   }
   

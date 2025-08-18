@@ -62,7 +62,8 @@ export default function LoginPage() {
     const result = await login(formData);
     
     if (result.success) {
-      const token = result.data.token;
+      const token = result.token;
+      console.log(result.token)
       if (!token) {
         toast.error('Authentication token missing');
         return;

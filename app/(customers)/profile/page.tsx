@@ -196,7 +196,7 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="container py-12">
+    <div className="container py-12 mt-20 px-4">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {/* Profile Sidebar */}
         <Card className="p-6 h-fit">

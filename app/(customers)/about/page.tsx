@@ -55,26 +55,26 @@ const AboutPage = () => {
     }
   ];
 
-  const team = [
-    {
-      name: "Kwame Addo",
-      role: "CEO & Founder",
-      image: "/images/team-1.jpg",
-      description: "Agricultural technology expert with 15+ years in sustainable farming."
-    },
-    {
-      name: "Ama Osei",
-      role: "Head of Operations",
-      image: "/images/team-2.jpg", 
-      description: "Supply chain specialist focused on connecting farmers to markets."
-    },
-    {
-      name: "Kofi Mensah",
-      role: "Technology Lead",
-      image: "/images/team-3.jpg",
-      description: "Digital innovation expert driving our platform development."
-    }
-  ];
+  // const team = [
+    // {
+    //   name: "Kwame Addo",
+    //   role: "CEO & Founder",
+    //   image: "/images/team-1.jpg",
+    //   description: "Agricultural technology expert with 15+ years in sustainable farming."
+    // },
+    // {
+    //   name: "Ama Osei",
+    //   role: "Head of Operations",
+    //   image: "/images/team-2.jpg", 
+    //   description: "Supply chain specialist focused on connecting farmers to markets."
+    // },
+    // {
+    //   name: "Kofi Mensah",
+    //   role: "Technology Lead",
+    //   image: "/images/team-3.jpg",
+    //   description: "Digital innovation expert driving our platform development."
+    // }
+  // ];
 
   return (
     <main className="min-h-screen">
@@ -277,7 +277,7 @@ const AboutPage = () => {
           </motion.div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {team.map((member, index) => (
+            {/* {team.map((member, index) => (
               <motion.div
                 key={index}
                 className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300"
@@ -302,7 +302,7 @@ const AboutPage = () => {
                   {member.description}
                 </p>
               </motion.div>
-            ))}
+            ))} */}
           </div>
         </div>
       </motion.section>
