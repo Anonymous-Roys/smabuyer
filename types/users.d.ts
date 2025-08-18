@@ -1,17 +1,28 @@
 type UserRole = "customer" | "farmer" | "investor" | "transit";
+type KYCStatus = "not_started" | "pending" | "approved" | "rejected";
 
-type KYCStatus = "not_started" | "pending" | "approved" | "rejected"
-
-interface UserProfile {
-    id: string;
-    email: string;
-    name: string;
-    role: UserRole;
-    kycStatus: KYCStatus;
-    avatar?: string;
-    address?: string;
-    createdAt?: Date;
-    updatedAt?: Date;
+export interface UserProfile {
+  id: string;
+  email: string;
+  name?: string; // Optional to match schema
+  role?: UserRole; // Optional to match schema
+  kycStatus?: KYCStatus; // Optional to match schema
+  phone?: string;
+  points?: number; // Optional to match schema
+  profileImage?: string | {
+    data: Buffer;
+    contentType: string;
+  };
+  avatar?: string; // Not in schema
+  address?: string; // Not in schema
+  createdAt?: Date;
+  updatedAt?: Date;
+  isVerified?: boolean;
+  active?: boolean;
+  verificationToken?: string;
+  verificationTokenExpires?: Date;
+  passwordResetToken?: string;
+  passwordResetExpires?: Date;
 }
 
 interface UserProfileUpdate {

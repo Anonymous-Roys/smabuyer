@@ -1,4 +1,4 @@
-smartgritrade/
+smagritrade/
 ├── app/
 │   ├── (auth)/
 │   │   ├── signin/

@@ -16,7 +16,7 @@ export default function BrandingSection() {
           {/* Title */}
           <div className="space-y-4">
             <h1 className="text-4xl font-bold tracking-wider xl:text-5xl drop-shadow-lg">
-              24/7 SMAGR1IADE
+              24/7 SMAGRITRADE
             </h1>
             <div className="w-24 h-1 mx-auto bg-white rounded-full opacity-80"></div>
           </div>

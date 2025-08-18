@@ -1,4 +1,4 @@
-# SmarGriTrade
+# SmaGriTrade
 
 ## Smart Agricultural Technology Platform
 

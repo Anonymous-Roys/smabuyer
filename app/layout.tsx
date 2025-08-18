@@ -10,8 +10,8 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: {
-    default: "SmartGriTrade - Connecting Farmers and Consumers",
-    template: "%s | SmartGriTrade",
+    default: "SmaGriTrade - Connecting Farmers and Consumers",
+    template: "%s | SmaGriTrade",
   },
   description:
     "A platform connecting farmers, customers, logistics, and investors in the agricultural ecosystem.",

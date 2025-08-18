@@ -24,3 +24,7 @@ export const signUpSchema = z.object({
   message: 'Passwords do not match',
   path: ['confirmPassword'],
 });
+
+export const isValidEmail = (email: string): boolean => {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+};

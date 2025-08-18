@@ -18,8 +18,8 @@ export default function VerifyEmailPage() {
     const verify = async () => {
       try {
         const response = await verifyEmail(token as string);
-        if (response.error) {
-          throw new Error(response.error.message);
+        if (!response.success) {
+          throw new Error(response.error?.message || 'Email verification failed');
         }
         if (response.data && response.data.token) {
           const authToken = response.data.token;

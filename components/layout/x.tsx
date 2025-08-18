@@ -122,7 +122,7 @@ export default function Navbar() {
         <Link
           href="/"
           className="flex items-center space-x-2"
-          aria-label="SmartGriTrade Home"
+          aria-label="SmaGriTrade Home"
         >
           <motion.div
             whileHover={{ scale: 1.05 }}
@@ -278,7 +278,7 @@ export default function Navbar() {
                 {/* Mobile Menu Header */}
                 <div className="flex items-center justify-between p-4 border-b">
                   <Link href="/" className="font-bold text-xl text-primary">
-                    SmartGri<span className="text-green-600">Trade</span>
+                    SmaGri<span className="text-green-600">Trade</span>
                   </Link>
                   <Button
                     variant="ghost"
