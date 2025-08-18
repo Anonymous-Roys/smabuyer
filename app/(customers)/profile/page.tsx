@@ -26,8 +26,8 @@ export default function ProfilePage() {
   const [isLoading, setIsLoading] = useState(true);
   const [isUpdating, setIsUpdating] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
-  const [isSubmittingKYC, setIsSubmittingKYC] = useState(false);
-  const [kycDocuments, setKycDocuments] = useState<File[]>([]);
+  // const [isSubmittingKYC, setIsSubmittingKYC] = useState(false);
+  // const [kycDocuments, setKycDocuments] = useState<File[]>([]);
   const [errors, setErrors] = useState<{
     name?: string;
     phone?: string;
@@ -365,9 +365,9 @@ export default function ProfilePage() {
                               multiple
                               accept=".pdf,.jpg,.jpeg,.png"
                               onChange={(e) => {
-                                if (e.target.files) {
-                                  setKycDocuments(Array.from(e.target.files));
-                                }
+                                // if (e.target.files) {
+                                  // setKycDocuments(Array.from(e.target.files));
+                                // }
                               }}
                               className="block w-full text-sm text-gray-500
                                 file:mr-4 file:py-2 file:px-4

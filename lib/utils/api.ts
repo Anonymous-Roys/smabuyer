@@ -2,6 +2,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { getToken } from './auth';
 import { UserProfile } from '@/types/users';
+import { Order } from '@/types/product';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://two47sma.onrender.com';
 
@@ -247,3 +248,12 @@ export const uploadProfileImage = async (file: File) => {
     };
   }
 };
+
+// // Orders API functions
+// export const getUserOrders = async () => {
+//   return fetchWithAuth<Order[]>('/api/buyer/orders');
+// };
+
+// export const getOrderById = async (orderId: string) => {
+//   return fetchWithAuth<Order>(`/api/buyer/orders/${orderId}`);
+// };
