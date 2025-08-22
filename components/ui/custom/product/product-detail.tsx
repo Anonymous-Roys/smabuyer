@@ -179,13 +179,13 @@ const ProductInfo = ({
 
   const formattedPrice = new Intl.NumberFormat("en-US", {
     style: "currency",
-    currency: "USD",
+    currency: "GHS",
   }).format(selectedVariant.price);
 
   const formattedComparedPrice = selectedVariant.comparedAtPrice
     ? new Intl.NumberFormat("en-US", {
       style: "currency",
-      currency: "USD",
+      currency: "GHS",
     }).format(selectedVariant.comparedAtPrice)
     : null;
 
@@ -195,7 +195,7 @@ const ProductInfo = ({
  const discountedPrice = discount
       ? new Intl.NumberFormat("en-US", {
           style: "currency",
-          currency: "USD",
+          currency: "GHS",
         }).format(selectedVariant.price * (1 - discount / 100))
       : null;
       

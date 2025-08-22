@@ -309,7 +309,7 @@ const handleSubmit = async (e: React.FormEvent) => {
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                      ZIP Code
+                      Postal Code
                     </label>
                     <input
                       type="text"
@@ -624,7 +624,7 @@ const handleSubmit = async (e: React.FormEvent) => {
                           </div>
                         </div>
                         <div className="text-gray-900 dark:text-white">
-                          ${(item.discountedPrice * item.quantity).toFixed(2)}
+                          GHS{(item.discountedPrice * item.quantity).toFixed(2)}
                         </div>
                       </div>
                     ))}
@@ -678,7 +678,7 @@ const handleSubmit = async (e: React.FormEvent) => {
                     </span>
                   </div>
                   <span className="text-gray-900 dark:text-white">
-                    ${(item.discountedPrice * item.quantity).toFixed(2)}
+                    GHS{(item.discountedPrice * item.quantity).toFixed(2)}
                   </span>
                 </div>
               ))}
@@ -690,7 +690,7 @@ const handleSubmit = async (e: React.FormEvent) => {
                   Subtotal
                 </span>
                 <span className="text-gray-900 dark:text-white">
-                  ${subtotal.toFixed(2)}
+                  GHS{subtotal.toFixed(2)}
                 </span>
               </div>
               <div className="flex justify-between">
@@ -701,19 +701,19 @@ const handleSubmit = async (e: React.FormEvent) => {
                   {shipping === 0 ? (
                     <span className="text-green-500">Free</span>
                   ) : (
-                    `$${shipping.toFixed(2)}`
+                    `GHS${shipping.toFixed(2)}`
                   )}
                 </span>
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-600 dark:text-gray-300">Tax</span>
                 <span className="text-gray-900 dark:text-white">
-                  ${tax.toFixed(2)}
+                  GHS{tax.toFixed(2)}
                 </span>
               </div>
               <div className="flex justify-between font-bold text-lg pt-2">
                 <span className="text-gray-900 dark:text-white">Total</span>
-                <span className="text-green-600">${total.toFixed(2)}</span>
+                <span className="text-green-600">GHS{total.toFixed(2)}</span>
               </div>
             </div>
 

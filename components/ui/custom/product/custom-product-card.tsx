@@ -121,17 +121,18 @@ const ProductCard = forwardRef<HTMLDivElement, EnhancedProductCardProps>(
       }
     }, [name]);
 
-    const formattedPrice = new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
-    }).format(price);
+   const formattedPrice = new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "GHS",
+}).format(price);
 
-    const discountedPrice = discount
-      ? new Intl.NumberFormat("en-US", {
-          style: "currency",
-          currency: "USD",
-        }).format(price * (1 - discount / 100))
-      : null;
+const discountedPrice = discount
+  ? new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "GHS",
+    }).format(price * (1 - discount / 100))
+  : null;
+
 const router = useRouter()
  const handleNameClick = (e: React.MouseEvent) => {
       e.preventDefault();

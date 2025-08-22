@@ -196,11 +196,11 @@ const ShoppingCartPage = () => {
 
                   <div className="col-span-2 text-center">
                     <span className="font-medium text-gray-900 dark:text-white">
-                      ${currentPrice.toFixed(2)}
+                      GHS{currentPrice.toFixed(2)}
                     </span>
                     {hasDiscount && (
                       <span className="block text-sm text-gray-500 line-through">
-                        ${item.price.toFixed(2)}
+                        GHS{item.price.toFixed(2)}
                       </span>
                     )}
                   </div>
@@ -224,7 +224,7 @@ const ShoppingCartPage = () => {
                   </div>
 
                   <div className="col-span-2 text-right font-medium text-gray-900 dark:text-white">
-                    ${(currentPrice * item.quantity).toFixed(2)}
+                    GHS{(currentPrice * item.quantity).toFixed(2)}
                   </div>
                 </div>
               );
@@ -251,14 +251,14 @@ const ShoppingCartPage = () => {
             <div className="space-y-3">
               <div className="flex justify-between">
                 <span className="text-gray-600 dark:text-gray-300">Subtotal</span>
-                <span className="font-medium">${subtotal.toFixed(2)}</span>
+                <span className="font-medium">GHS{subtotal.toFixed(2)}</span>
               </div>
 
               <div className="flex justify-between">
                 <span className="text-gray-600 dark:text-gray-300">
                   Tax (10%)
                 </span>
-                <span className="font-medium">${tax.toFixed(2)}</span>
+                <span className="font-medium">GHS{tax.toFixed(2)}</span>
               </div>
 
               <div className="flex justify-between">
@@ -269,7 +269,7 @@ const ShoppingCartPage = () => {
                   {shipping === 0 ? (
                     <span className="text-green-500">Free</span>
                   ) : (
-                    `$${shipping.toFixed(2)}`
+                    `GHS ${shipping.toFixed(2)}`
                   )}
                 </span>
               </div>
@@ -278,7 +278,7 @@ const ShoppingCartPage = () => {
 
               <div className="flex justify-between text-lg font-bold">
                 <span className="text-gray-900 dark:text-white">Total</span>
-                <span className="text-green-600">${total.toFixed(2)}</span>
+                <span className="text-green-600">GHS{total.toFixed(2)}</span>
               </div>
 
               <Link
